@@ -1,9 +1,30 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <title>Hello</title>
-    </head>
     <body>
-        testing123,testing123
+        <button onclick="left()">TurnLeft</button>
+        <button onclick="right()">TurnRight</button>
+        <p id="test"></p>
     </body>
+    <script>
+        var channel = prompt("What server are you connecting to:", "2.tcp.ngrok.io:10546")
+        var id = prompt("Computer ID");
+        if(!channel) {
+            window.location.reload(true)
+        }
+        console.log(channel)
+        const w = new WebSocket("ws://"+channel)
+        w.addEventListener("open", () => {
+            console.log("ok");
+        });
+        w.addEventListener("message", (msg) => {
+            console.log(msg)
+        });
+        function left() {
+            w.send("turnLeft"+id);
+        };
+        function right() {
+
+            w.send("turnRight"+id);
+        };
+    </script>
 </html>
