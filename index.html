@@ -1,8 +1,7 @@
 <!DOCTYPE html>
 <html>
     <style>
-        button.custom {position: absolute;bottom: 72%;min-height: 10.25%;}
-        textarea.custom {max-width: 24%;margin-top: 3.575%;}
+        .custom {max-width: 24%;margin-top: 3.575%;line-height:200%}
         input.compid {width: 5%;float: right;font-size:75%}
         button.compid {width: 10%;float: right;font-size:90%}
         .button {background-color: #04AA6D;border: 1px solid green;color: white;padding: 10px 24px;cursor: pointer;width: 50%;display: block;margin-left: auto;margin-right: auto;}
@@ -10,6 +9,10 @@
         .right {background-color: #04AA6D;border: 1px solid green;color: white;padding: 10px 24px;cursor: pointer;width: 25%;display: block;float: right;position: relative;right: 19.5%;}
     </style>
     <body>
+        <button onclick="inspect('down')">Inspect Down</button>
+        <button onclick="inspect('up')">Inspect Up</button>
+        <button onclick="inspect()">Inspect Forward</button>
+        <p id="display">This Shows The Block</p>
         <button class="button" onclick="forward()">Forward</button>
         <button class="button" onclick="back()">Backward</button>
         <input id="comid" class="compid" type="text" oninput="changeId()" placeholder="Computer Id"></input>
@@ -38,7 +41,10 @@
             console.log("ok");
         });
         w.addEventListener("message", (msg) => {
-            console.log(msg)
+            console.log(msg.data)
+            if(msg.data.substring(0,3) == "123") {
+                document.getElementById("display").innerHTML = msg.data.substring(3);
+            }
         });
         function left() {
             w.send(id+"turtle.turnLeft()");
@@ -54,6 +60,15 @@
         };
         function custom() {
             w.send(id+document.getElementById("cusinput").value);
+        };
+        function inspect(a) {
+            if (a == "down") {
+                w.send(id+"o=fs.open('inspect.txt','w') z,x=turtle.inspectDown() o.write(x.name) o.close()");
+            } else if (a == "up") {
+                w.send(id+"o=fs.open('inspect.txt','w') z,x=turtle.inspectUp() o.write(x.name) o.close()");
+            } else if (a != "up" & a != "down") {
+                w.send(id+"o=fs.open('inspect.txt','w') z,x=turtle.inspect() o.write(x.name) o.close()");
+            }
         };
     </script>
 </html>
