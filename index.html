@@ -1,21 +1,92 @@
 <!DOCTYPE html>
 <html>
+
+<head>
+    <script type="text/javascript" src="jquery.js"></script>
+    <script type="text/javascript" src="jquery-ui.js"></script>
+    <script type="text/javascript" src="pageable.js"></script>
+    <script type="text/javascript" src="front-end.js"></script>
+    <link rel="stylesheet" href="normalize.css">
+    <link rel="stylesheet" href="front-end.css">
     <style>
-        input.compid {width: 5%;float: right;font-size:75%}
-        button.compid {width: 10%;float: right;font-size:90%}
-        .button {background-color: #04AA6D;border: 1px solid green;color: white;padding: 10px 24px;cursor: pointer;width: 50%;display: block;margin-left: auto;margin-right: auto;}
-        .left {background-color: #04AA6D;border: 1px solid green;color: white;padding: 10px 24px;cursor: pointer;width: 10%;display: block;float: left;position: absolute;top: 5.75%;right: 74.75%;}
-        .right {background-color: #04AA6D;border: 1px solid green;color: white;padding: 10px 24px;cursor: pointer;width: 10%;display: block;float: right;position: absolute;top: 5.75%;left: 74.75%;}
+        input.compid {
+            width: 5%;
+            float: right;
+            font-size: 75%
+        }
+        
+        button.compid {
+            width: 10%;
+            float: right;
+            font-size: 90%
+        }
+        
+        .button {
+            background-color: #04AA6D;
+            border: 1px solid green;
+            color: white;
+            padding: 10px 24px;
+            cursor: pointer;
+            width: 50%;
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        .left {
+            background-color: #04AA6D;
+            border: 1px solid green;
+            color: white;
+            padding: 10px 24px;
+            cursor: pointer;
+            width: 10%;
+            display: block;
+            float: left;
+            position: absolute;
+            top: 5.75%;
+            right: 74.75%;
+        }
+        
+        .right {
+            background-color: #04AA6D;
+            border: 1px solid green;
+            color: white;
+            padding: 10px 24px;
+            cursor: pointer;
+            width: 10%;
+            display: block;
+            float: right;
+            position: absolute;
+            top: 5.75%;
+            left: 74.75%;
+        }
     </style>
-    <body>
-        <button class="left" onclick="left()">TurnLeft</button>
-        <button class="button" onclick="forward()">Forward</button>
-        <button class="button" onclick="back()">Backward</button>
-        <button class="right" onclick="right()">TurnRight</button>
-        <input id="comid" class="compid" type="text" oninput="changeId()"></input>
-        <button class="compid">Computer Id Change</button>
-        <p id="test"></p>
-    </body>
+    <meta name="generator" content="Silex v2.2.7">
+    <style class="silex-inline-styles" type="text/css">
+        .silex-id-1655912932011-0 {
+            min-width: 100%;
+        }
+    </style>
+    <script type="text/javascript" class="silex-json-styles">
+        [{"desktop":{"silex-id-1655912932011-0":{"min-width":"100%"}},"mobile":{},"componentData":{}}]
+    </script>
+    <style type="text/css" class="silex-style"></style>
+    <script type="text/javascript" class="silex-script"></script>
+    <title></title>
+
+    <!-- Silex HEAD tag do not remove -->
+    <!-- End of Silex HEAD tag do not remove -->
+</head>
+
+<body class="container-element silex-id-1655912932011-0 silex-runtime" data-silex-type="container" data-silex-id="silex-id-1655912932011-0">
+    <button class="left" onclick="left()">TurnLeft</button>
+    <button class="button" onclick="forward()">Forward</button>
+    <button class="button" onclick="back()">Backward</button>
+    <button class="right" onclick="right()">TurnRight</button>
+    <input id="comid" class="compid" type="text" oninput="changeId()">
+    <button class="compid">Computer Id Change</button>
+    <p id="test"></p>
+
     <script>
         var channel = prompt("What server are you connecting to:", "2.tcp.ngrok.io:10546")
         let id = 0;
@@ -50,4 +121,13 @@
             w.send(id+"turtle.back()");
         };
     </script>
+
+    <div class="silex-pages">
+        <div data-silex-type="image" data-silex-id="silex-id-hamburger-menu" class="menu-button editable-style silex-id-hamburger-menu image-element page-page-1 paged-element prevent-draggable prevent-resizable"><img alt="open mobile menu" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAoCAYAAAC8cqlMAAAB5UlEQVR42u2ZPWvCUBSGM+UfFO3e3dLu/QN+oKj4EUXRQREEJYgoiCAu6qCogyDo7iJ21UUaKqEgCC4iiEMGB3UVgsnpTWj/wfVK2nvhGbKEPJyT996TMMzPGg6H5mKx+GgkyuWyeTQasb8OTDwef4tEIp8+n+/LYIjJZJJHQiwzm81M6OLDarWqNpsNjEYgEJCy2ewT0+/3TagighElNFAnQT6ft1ARKkJFqMgfFvF4PFpuEwFtdrcRqVarIIoirFYrIiyXSxiPx+B2u/GJBINBuF6vQHopigK1Wg2fCMdxcLlciIuoqgqNRgOfiN1uB3Qwg91uB8fjkQiHwwEmkwne1qLxS0VuKKJle71eh06nQ4Rmswk8z+MVcTqdsNlsQJZlotF7Pp8hk8ngE4lGo/qN7xG/vV4Pb0Xm8zlxkdPpBGgMx/+yJxIJKBQKRMjlcuBwOGhq/Q+RcDgMsViMCFrAuFwu/CKDwQC22y1IkkSE/X4PgiDo+xc2Ea0S9zjGa/Hb7Xbxifj9fj0K7yFSqVTwtlY6nYbpdKpPiSRYLBbQarX0PYymFhWhIlSEilCRW6GdyUqlkoVZr9dsKpXiOY6TtW+7BkNBz/7ebrcf9L+6Xq+XRYPMMyrTq5EIhUIvaAjTJb4BBNQ2yhnth0wAAAAASUVORK5CYII="
+                class="silex-element-content"></div>
+    </div>
+
+
+</body>
+
 </html>
