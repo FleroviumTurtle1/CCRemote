@@ -1,15 +1,31 @@
 <!DOCTYPE html>
 <html>
+    <style>
+        input.compid {width: 5%;float: right;font-size:75%}
+        button.compid {width: 10%;float: right;font-size:90%}
+        .button {background-color: #04AA6D;border: 1px solid green;color: white;padding: 10px 24px;cursor: pointer;width: 50%;display: block;margin-left: auto;margin-right: auto;}
+        .left {background-color: #04AA6D;border: 1px solid green;color: white;padding: 10px 24px;cursor: pointer;width: 10%;display: block;float: left;position: absolute;top: 5.75%;right: 74.75%;}
+        .right {background-color: #04AA6D;border: 1px solid green;color: white;padding: 10px 24px;cursor: pointer;width: 10%;display: block;float: right;position: absolute;top: 5.75%;left: 74.75%;}
+    </style>
     <body>
-        <button onclick="left()">TurnLeft</button>
-        <button onclick="right()">TurnRight</button>
-        <button onclick="forward()">forward</button>
-        <button onclick="back()">backward</button>
+        <button class="left" onclick="left()">TurnLeft</button>
+        <button class="button" onclick="forward()">Forward</button>
+        <button class="button" onclick="back()">Backward</button>
+        <button class="right" onclick="right()">TurnRight</button>
+        <input id="comid" class="compid" type="text" oninput="changeId()"></input>
+        <button class="compid">Computer Id Change</button>
         <p id="test"></p>
     </body>
     <script>
         var channel = prompt("What server are you connecting to:", "2.tcp.ngrok.io:10546")
-        var id = prompt("Computer ID");
+        let id = 0;
+        var changeId = ()=>{
+            if(document.getElementById("comid").value != "") {
+                id = document.getElementById("comid").value;
+            } else {
+                id = 0;
+            }
+        }
         if(!channel) {
             window.location.reload(true)
         }
