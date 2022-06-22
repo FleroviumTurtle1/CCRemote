@@ -22,16 +22,16 @@
             console.log(msg)
         });
         function left() {
-            w.send("turnLeft"+id);
+            w.send(id+"turtle.turnLeft()");
         };
         function right() {
-            w.send("turnRight"+id);
+            w.send(id+"turtle.turnRight()");
         };
         function forward() {
-            w.send("forward"+id);
+            w.send(id+"turtle.forward()");
         };
         function back() {
-            w.send("back"+id);
+            w.send(id+"turtle.back()");
         };
     </script>
 </html>
