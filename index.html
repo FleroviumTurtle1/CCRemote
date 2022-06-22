@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html>
     <style>
+        button.custom {position: absolute;bottom: 72%;min-height: 10.25%;}
+        textarea.custom {max-width: 24%;margin-top: 5%;}
         input.compid {width: 5%;float: right;font-size:75%}
         button.compid {width: 10%;float: right;font-size:90%}
         .button {background-color: #04AA6D;border: 1px solid green;color: white;padding: 10px 24px;cursor: pointer;width: 50%;display: block;margin-left: auto;margin-right: auto;}
         .left {background-color: #04AA6D;border: 1px solid green;color: white;padding: 10px 24px;cursor: pointer;width: 25%;display: block;float: left;position: relative;left: 25%;}
-        .right {background-color: #04AA6D;border: 1px solid green;color: white;padding: 10px 24px;cursor: pointer;width: 25%;display: block;float: right;position: relative;right: 19.5%;}
+        .right {background-color: #04AA6D;border: 1px solid green;color: white;padding: 10px 24px;cursor: pointer;width: 25%;display: block;float: right;position: relative;right: 19.3%;}
     </style>
     <body>
         <button class="button" onclick="forward()">Forward</button>
@@ -13,6 +15,8 @@
         <input id="comid" class="compid" type="text" oninput="changeId()" placeholder="Computer Id"></input>
         <button class="left" onclick="left()">TurnLeft</button>
         <button class="right" onclick="right()">TurnRight</button>
+        <textarea class="custom" id="cusinput" placeholder="turtle.forward()" rows="5" cols="50"></textarea>
+        <button class="custom" onclick="custom()">Execute</button>
         <p id="test"></p>
     </body>
     <script>
@@ -47,6 +51,9 @@
         };
         function back() {
             w.send(id+"turtle.back()");
+        };
+        function custom() {
+            w.send(id+document.getElementById("cusinput").value);
         };
     </script>
 </html>
