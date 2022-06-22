@@ -12,7 +12,8 @@
         <button onclick="inspect('down')">Inspect Down</button>
         <button onclick="inspect('up')">Inspect Up</button>
         <button onclick="inspect()">Inspect Forward</button>
-        <p id="display">This Shows The Block</p>
+        <button onclick="fuel('get')">Get Fuel</button>
+        <p id="display">This Shows The Recieved Data</p>
         <button class="button" onclick="forward()">Forward</button>
         <button class="button" onclick="back()">Backward</button>
         <input id="comid" class="compid" type="text" oninput="changeId()" placeholder="Computer Id"></input>
@@ -61,6 +62,11 @@
         function custom() {
             w.send(id+document.getElementById("cusinput").value);
         };
+        function fuel(r) {
+            if (r == "get") {
+                w.send(id+"o=fs.open('inspect.txt','w') z=turtle.getFuelLevel() o.write(z) o.close()")
+            }
+        }
         function inspect(a) {
             if (a == "down") {
                 w.send(id+"o=fs.open('inspect.txt','w') z,x=turtle.inspectDown() o.write(x.name) o.close()");
