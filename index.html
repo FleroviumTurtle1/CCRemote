@@ -3,6 +3,8 @@
     <body>
         <button onclick="left()">TurnLeft</button>
         <button onclick="right()">TurnRight</button>
+        <button onclick="forward()">forward</button>
+        <button onclick="back()">backward</button>
         <p id="test"></p>
     </body>
     <script>
@@ -23,8 +25,13 @@
             w.send("turnLeft"+id);
         };
         function right() {
-
             w.send("turnRight"+id);
+        };
+        function forward() {
+            w.send("forward"+id);
+        };
+        function back() {
+            w.send("back"+id);
         };
     </script>
 </html>
