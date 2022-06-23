@@ -48,7 +48,7 @@
             }
         });
         function left() {
-            w.send(id+"turtle.turnLeft()");
+            w.send(id+"left");
         };
         function right() {
             w.send(id+"turtle.turnRight()");
@@ -69,11 +69,11 @@
         }
         function inspect(a) {
             if (a == "down") {
-                w.send(id+"o=fs.open('inspect.txt','w') z,x=turtle.inspectDown() o.write(x.name) o.close()");
+                w.send(id+"o=fs.open('inspect.txt','w') z,x=turtle.inspectDown() if x.name ~= nil then o.write(x.name) else o.write('minecraft:air') end o.close()");
             } else if (a == "up") {
-                w.send(id+"o=fs.open('inspect.txt','w') z,x=turtle.inspectUp() o.write(x.name) o.close()");
+                w.send(id+"o=fs.open('inspect.txt','w') z,x=turtle.inspectUp() if x.name ~= nil then o.write(x.name) else o.write('minecraft:air') end o.close()");
             } else if (a != "up" & a != "down") {
-                w.send(id+"o=fs.open('inspect.txt','w') z,x=turtle.inspect() o.write(x.name) o.close()");
+                w.send(id+"o=fs.open('inspect.txt','w') z,x=turtle.inspect() if x.name ~= nil then o.write(x.name) else o.write('minecraft:air') end o.close()");
             }
         };
     </script>
