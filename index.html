@@ -51,29 +51,29 @@
             w.send(id+"left");
         };
         function right() {
-            w.send(id+"turtle.turnRight()");
+            w.send(id+"right");
         };
         function forward() {
-            w.send(id+"turtle.forward()");
+            w.send(id+"for");
         };
         function back() {
-            w.send(id+"turtle.back()");
+            w.send(id+"back");
         };
         function custom() {
             w.send(id+document.getElementById("cusinput").value);
         };
         function fuel(r) {
             if (r == "get") {
-                w.send(id+"o=fs.open('inspect.txt','w') z=turtle.getFuelLevel() o.write(z) o.close()")
+                w.send(id+"getfuel")
             }
         }
         function inspect(a) {
             if (a == "down") {
-                w.send(id+"o=fs.open('inspect.txt','w') z,x=turtle.inspectDown() if x.name ~= nil then o.write(x.name) else o.write('minecraft:air') end o.close()");
+                w.send(id+"inspdown");
             } else if (a == "up") {
-                w.send(id+"o=fs.open('inspect.txt','w') z,x=turtle.inspectUp() if x.name ~= nil then o.write(x.name) else o.write('minecraft:air') end o.close()");
+                w.send(id+"inspup");
             } else if (a != "up" & a != "down") {
-                w.send(id+"o=fs.open('inspect.txt','w') z,x=turtle.inspect() if x.name ~= nil then o.write(x.name) else o.write('minecraft:air') end o.close()");
+                w.send(id+"insp");
             }
         };
     </script>
