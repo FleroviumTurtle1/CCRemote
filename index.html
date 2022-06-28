@@ -63,16 +63,20 @@
         };
         function fuel(r) {
             if (r == "get") {
-                w.send(id+"getfuel")
+                w.send(id+"getfuel");
+                document.getElementById("display").innerHTML = "Getting";
             }
         }
         function inspect(a) {
             if (a == "down") {
                 w.send(id+"inspdown");
+                document.getElementById("display").innerHTML = "Getting";
             } else if (a == "up") {
                 w.send(id+"inspup");
+                document.getElementById("display").innerHTML = "Getting";
             } else if (a != "up" & a != "down") {
                 w.send(id+"insp");
+                document.getElementById("display").innerHTML = "Getting";
             }
         };
     </script>
