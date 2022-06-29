@@ -19,6 +19,8 @@
         <input id="comid" class="compid" type="text" oninput="changeId()" placeholder="Computer Id"></input>
         <button class="left" onclick="left()">TurnLeft</button>
         <button class="right" onclick="right()">TurnRight</button>
+        <button class="button" onclick="up()">Up</button>
+        <button class="button" onclick="down()">Down</button>
         <textarea class="custom" id="cusinput" placeholder="turtle.forward()" rows="5" cols="50"></textarea>
         <button class="custom" onclick="custom()">Execute</button>
     </body>
@@ -46,6 +48,12 @@
                 document.getElementById("display").innerHTML = msg.data.substring(3);
             }
         });
+        function up() {
+            w.send(id+"up");
+        };
+        function down() {
+            w.send(id+"down");
+        };
         function left() {
             w.send(id+"left");
         };
