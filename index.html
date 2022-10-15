@@ -50,8 +50,7 @@
                 document.getElementById("display").innerHTML = msg.data.substring(3);
             }
             if(msg.data.substring(0,4) == "webc") {
-                console.log(msg.data.substring(5));
-                complist = msg.data.substring(5);
+                complist = msg.data.substring(4);
             }
         });
         function up() {
