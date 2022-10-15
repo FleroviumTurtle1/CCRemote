@@ -25,6 +25,7 @@
         <button class="custom" onclick="custom()">Execute</button>
     </body>
     <script>
+        var complist;
         var channel = prompt("What server are you connecting to:", "2.tcp.ngrok.io:10546")
         let id = 0;
         var changeId = ()=>{
@@ -47,6 +48,10 @@
             console.log(msg.data)
             if(msg.data.substring(0,3) == "web") {
                 document.getElementById("display").innerHTML = msg.data.substring(3);
+            }
+            if(msg.data.substring(0,4) == "webc") {
+                console.log(msg.data.substring(5));
+                complist = msg.data.substring(5);
             }
         });
         function up() {
