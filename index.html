@@ -50,7 +50,7 @@
                 document.getElementById("display").innerHTML = msg.data.substring(3);
             }
             if(msg.data.substring(0,4) == "cweb") {
-                if(complist[0]) {
+                if(complist) {
                     if(!complist.includes(msg.data.substring(4))) {
                         complist.push(msg.data.substring(4));
                     }
