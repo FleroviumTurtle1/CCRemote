@@ -50,8 +50,13 @@
                 document.getElementById("display").innerHTML = msg.data.substring(3);
             }
             if(msg.data.substring(0,4) == "cweb") {
-                complist = msg.data.substring(4);
-                console.log(complist);
+                if(complist[0]) {
+                    if(!complist.includes(msg.data.substring(4))) {
+                        complist.push(msg.data.substring(4));
+                    }
+                } else {
+                    complist.push(msg.data.substring(4));
+                }
             }
         });
         function up() {
