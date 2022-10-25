@@ -17,6 +17,10 @@
         <button class="button" onclick="forward()">Forward</button>
         <button class="button" onclick="back()">Backward</button>
         <input id="comid" class="compid" type="text" oninput="changeId()" placeholder="Computer Id"></input>
+        <select id="comid" class="compid">
+            <option>1</option>
+            <option>2</option>
+        </select>
         <button class="left" onclick="left()">TurnLeft</button>
         <button class="right" onclick="right()">TurnRight</button>
         <button class="button" onclick="up()">Up</button>
@@ -53,6 +57,7 @@
                 if(complist) {
                     if(!complist.includes(msg.data.substring(4))) {
                         complist.push(msg.data.substring(4));
+                        console.log(complist);
                     }
                 } else {
                     complist = msg.data.substring(4)
