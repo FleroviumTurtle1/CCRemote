@@ -1,12 +1,14 @@
 <!DOCTYPE html>
 <html>
     <style>
-        .custom {max-width: 24%;margin-top: 3.575%;line-height:200%}
+        .custom {max-width: 24%;margin-top: 12%;line-height:200%}
         .compid {width: 5%;float: right;font-size:75%}
         button.compid {width: 10%;float: right;font-size:90%}
         .button {background-color: #04AA6D;border: 1px solid green;color: white;padding: 10px 24px;cursor: pointer;width: 50%;display: block;margin-left: auto;margin-right: auto;}
         .left {background-color: #04AA6D;border: 1px solid green;color: white;padding: 10px 24px;cursor: pointer;width: 25%;display: block;float: left;position: relative;left: 25%;}
         .right {background-color: #04AA6D;border: 1px solid green;color: white;padding: 10px 24px;cursor: pointer;width: 25%;display: block;float: right;position: relative;right: 14.25%;}
+        #up {position: absolute; left: 25.4%; margin-top: 37px; width: 49.2%;}
+        #down {position: absolute; left: 25.4%; width: 49.2%; margin-top: 74px;}
     </style>
     <body>
         <button onclick="inspect('down')">Inspect Down</button>
@@ -21,10 +23,10 @@
             <option>1</option>
             <option>2</option>
         </select>
-        <button class="left" onclick="left()">TurnLeft</button>
-        <button class="right" onclick="right()">TurnRight</button>
-        <button class="button" onclick="up()">Up</button>
-        <button class="button" onclick="down()">Down</button>
+        <div><button class="left" onclick="left()">TurnLeft</button></div>
+        <div><button class="right" onclick="right()">TurnRight</button></div>
+        <button class="button" id="up" onclick="up()">Up</button>
+        <button class="button" id="down" onclick="down()">Down</button>
         <textarea class="custom" id="cusinput" placeholder="turtle.forward()" rows="5" cols="50"></textarea>
         <button class="custom" onclick="custom()">Execute</button>
     </body>
