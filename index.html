@@ -50,6 +50,9 @@
             console.log("ok");
             ws.send("WebClientConnected")
         });
+        setInterval(function snend() {
+            ws.send('');
+        },20000);
         w.addEventListener("message", (msg) => {
             console.log(msg.data)
             if(msg.data.substring(0,3) == "web") {
