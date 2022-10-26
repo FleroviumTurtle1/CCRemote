@@ -48,10 +48,10 @@
         const w = new WebSocket("ws://"+channel)
         w.addEventListener("open", () => {
             console.log("ok");
-            ws.send("WebClientConnected")
+            w.send("WebClientConnected")
         });
         setInterval(function snend() {
-            ws.send('');
+            w.send('');
         },20000);
         w.addEventListener("message", (msg) => {
             console.log(msg.data)
