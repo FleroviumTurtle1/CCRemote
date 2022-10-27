@@ -91,41 +91,41 @@
             id = document.getElementById('comid').value;
         }
         function up() {
-            w.send(id+"up");
+            w.send("coms "+id+" up");
         };
         function down() {
-            w.send(id+"down");
+            w.send("coms "+id+" down");
         };
         function left() {
-            w.send(id+"left");
+            w.send("coms "+id+" left");
         };
         function right() {
-            w.send(id+"right");
+            w.send("coms "+id+" right");
         };
         function forward() {
-            w.send(id+"for");
+            w.send("coms "+id+" for");
         };
         function back() {
-            w.send(id+"back");
+            w.send("coms "+id+" back");
         };
         function custom() {
-            w.send(id+document.getElementById("cusinput").value);
+            w.send("coms "+id+" "+document.getElementById("cusinput").value);
         };
         function fuel(r) {
             if (r == "get") {
-                w.send(id+"getfuel");
+                w.send("coms "+id+" getfuel");
                 document.getElementById("display").innerHTML = "Getting";
             }
         }
         function inspect(a) {
             if (a == "down") {
-                w.send(id+"inspdown");
+                w.send("coms "+id+" inspdown");
                 document.getElementById("display").innerHTML = "Getting";
             } else if (a == "up") {
-                w.send(id+"inspup");
+                w.send("coms "+id+" inspup");
                 document.getElementById("display").innerHTML = "Getting";
             } else if (a != "up" & a != "down") {
-                w.send(id+"insp");
+                w.send("coms "+id+" insp");
                 document.getElementById("display").innerHTML = "Getting";
             }
         };
