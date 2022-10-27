@@ -48,8 +48,7 @@
             console.log(msg.data)
             if(msg.data.substring(0,3) == "web") {
                 document.getElementById("display").innerHTML = msg.data.substring(3);
-            }
-            if(msg.data.substring(0,4) == "cweb") {
+            } else if(msg.data.substring(0,4) == "cweb") {
                 if(complist) {
                     if(!complist.includes(msg.data.substring(4))) {
                         complist.push(msg.data.substring(4));
@@ -59,6 +58,10 @@
                 }
                 for (let x = 0; x < complist.length; ++x) {
                     console.log(complist[x].tostring);
+                }
+            } else if (msg.data.substring(0,4) == "rweb") {
+                if (complist.includes(msg.data.substring(4)) & complist.indexOf(msg.data.substring(4)) > -1) {
+                    complist.splice(complist.indexOf(msg.data.substring(4)),1);
                 }
             }
             for (let e = 0; e < complist.length; ++e) {
