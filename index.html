@@ -2,7 +2,7 @@
 <html>
     <style>
         .custom {max-width: 24%; margin-top: 120px; line-height:200%; float: left;}
-        .compid {width: 5%;float: right;font-size:75%}
+        .compid {width: 10%;float: right;font-size:80%;background-color:blueviolet}
         button.compid {width: 10%;float: right;font-size:90%}
         .button {background-color: #04AA6D;border: 1px solid green;color: white;padding: 10px 24px;cursor: pointer;width: 50%;display: block;margin-left: auto;margin-right: auto;}
         .left {background-color: #04AA6D; border: 1px solid green; color: white; padding: 10px 24px; cursor: pointer; width: 25%; display: block; float: left; position: relative; left: 25.2%;}
@@ -18,8 +18,7 @@
         <p id="display">This Shows The Recieved Data</p>
         <button class="button" onclick="forward()">Forward</button>
         <button class="button" onclick="back()">Backward</button>
-        <select id="comid" class="compid">
-        </select>
+        <select id="comid" class="compid" onchange="selecte()"></select>
         <div><button class="left" onclick="left()">TurnLeft</button></div>
         <div><button class="right" onclick="right()">TurnRight</button></div>
         <button class="button" id="up" onclick="up()">Up</button>
@@ -52,6 +51,10 @@
                 if(complist) {
                     if(!complist.includes(msg.data.substring(4))) {
                         complist.push(msg.data.substring(4));
+                        var opt = document.createElement('option');
+                        opt.innerHTML = msg.data.substring(4);
+                        document.getElementById('comid').appendChild(opt);
+                        id = document.getElementById('comid').value;
                     }
                 } else {
                     complist = msg.data.substring(4)
@@ -61,6 +64,13 @@
                 }
             } else if (msg.data.substring(0,4) == "rweb") {
                 if (complist.includes(msg.data.substring(4)) & complist.indexOf(msg.data.substring(4)) > -1) {
+                    var selectobject = document.getElementById("comid");
+                    for (var i=0; i<selectobject.length; i++) {
+                        if (selectobject.options[i].value == msg.data.substring(4)) {
+                            selectobject.remove(i);
+                            id = document.getElementById('comid').value;
+                        }
+                    }
                     complist.splice(complist.indexOf(msg.data.substring(4)),1);
                 }
             }
@@ -77,6 +87,9 @@
         w.addEventListener("close", () => {
             clearInterval(snending);
         });
+        function selecte() {
+            id = document.getElementById('comid').value;
+        }
         function up() {
             w.send(id+"up");
         };
