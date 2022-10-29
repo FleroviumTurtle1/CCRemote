@@ -31,7 +31,6 @@
         var inselect = [];
         var channel = prompt("What server are you connecting to:", "2.tcp.ngrok.io:10546")
         let id = 0;
-        let msgg = "";
         if(!channel) {
             window.location.reload(true)
         }
@@ -89,45 +88,44 @@
             clearInterval(snending);
         });
         function selecte() {
-            id = document.getElementById('comid').value;
-            msgg = `comid ${id} `;
+            id = `comid ${document.getElementById('comid').value} `;
         }
         function up() {
-            w.send(msgg+"up");
+            w.send(id+"up");
         };
         function down() {
-            w.send(msgg+"down");
+            w.send(id+"down");
         };
         function left() {
-            w.send(msgg+"left");
+            w.send(id+"left");
         };
         function right() {
-            w.send(msgg+"right");
+            w.send(id+"right");
         };
         function forward() {
-            w.send(msgg+"for");
+            w.send(id+"for");
         };
         function back() {
-            w.send(msgg+"back");
+            w.send(id+"back");
         };
         function custom() {
-            w.send(msgg+document.getElementById("cusinput").value);
+            w.send(id+document.getElementById("cusinput").value);
         };
         function fuel(r) {
             if (r == "get") {
-                w.send(msgg+"getfuel");
+                w.send(id+"getfuel");
                 document.getElementById("display").innerHTML = "Getting";
             }
         }
         function inspect(a) {
             if (a == "down") {
-                w.send(msgg+"inspdown");
+                w.send(id+"inspdown");
                 document.getElementById("display").innerHTML = "Getting";
             } else if (a == "up") {
-                w.send(msgg+"inspup");
+                w.send(id+"inspup");
                 document.getElementById("display").innerHTML = "Getting";
             } else if (a != "up" & a != "down") {
-                w.send(msgg+"insp");
+                w.send(id+"insp");
                 document.getElementById("display").innerHTML = "Getting";
             }
         };
