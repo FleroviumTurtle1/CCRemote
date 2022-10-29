@@ -89,44 +89,44 @@
         });
         function selecte() {
             id = document.getElementById('comid').value;
-            id = `comid ${id} `;
+            msgg = `comid ${id} `;
         }
         function up() {
-            w.send(id+"up");
+            w.send(msgg+"up");
         };
         function down() {
-            w.send(id+"down");
+            w.send(msgg+"down");
         };
         function left() {
-            w.send(id+"left");
+            w.send(msgg+"left");
         };
         function right() {
-            w.send(id+"right");
+            w.send(msgg+"right");
         };
         function forward() {
-            w.send(id+"for");
+            w.send(msgg+"for");
         };
         function back() {
-            w.send(id+"back");
+            w.send(msgg+"back");
         };
         function custom() {
-            w.send(id+document.getElementById("cusinput").value);
+            w.send(msgg+document.getElementById("cusinput").value);
         };
         function fuel(r) {
             if (r == "get") {
-                w.send(id+"getfuel");
+                w.send(msgg+"getfuel");
                 document.getElementById("display").innerHTML = "Getting";
             }
         }
         function inspect(a) {
             if (a == "down") {
-                w.send(id+"inspdown");
+                w.send(msgg+"inspdown");
                 document.getElementById("display").innerHTML = "Getting";
             } else if (a == "up") {
-                w.send(id+"inspup");
+                w.send(msgg+"inspup");
                 document.getElementById("display").innerHTML = "Getting";
             } else if (a != "up" & a != "down") {
-                w.send(id+"insp");
+                w.send(msgg+"insp");
                 document.getElementById("display").innerHTML = "Getting";
             }
         };
