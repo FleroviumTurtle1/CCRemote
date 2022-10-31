@@ -38,38 +38,38 @@
             ws.send('');
         },20000);
         function up() {
-            w.send(document.getElementById('comid').value+"up");
+            ws.send(document.getElementById('comid').value+"up");
         };
         function down() {
-            w.send(document.getElementById('comid').value+"down");
+            ws.send(document.getElementById('comid').value+"down");
         };
         function left() {
-            w.send(document.getElementById('comid').value+"left");
+            ws.send(document.getElementById('comid').value+"left");
         };
         function right() {
-            w.send(document.getElementById('comid').value+"right");
+            ws.send(document.getElementById('comid').value+"right");
         };
         function forward() {
-            w.send(document.getElementById('comid').value+"for");
+            ws.send(document.getElementById('comid').value+"for");
         };
         function back() {
-            w.send(document.getElementById('comid').value+"back");
+            ws.send(document.getElementById('comid').value+"back");
         };
         function fuel(r) {
             if (r == "get") {
-                w.send(document.getElementById('comid').value+"getfuel");
+                ws.send(document.getElementById('comid').value+"getfuel");
                 document.getElementById("display").innerHTML = "Getting";
             }
         }
         function inspect(a) {
             if (a == "down") {
-                w.send(document.getElementById('comid').value+"inspdown");
+                ws.send(document.getElementById('comid').value+"inspdown");
                 document.getElementById("display").innerHTML = "Getting";
             } else if (a == "up") {
-                w.send(document.getElementById('comid').value+"inspup");
+                ws.send(document.getElementById('comid').value+"inspup");
                 document.getElementById("display").innerHTML = "Getting";
             } else if (a != "up" & a != "down") {
-                w.send(document.getElementById('comid').value+"insp");
+                ws.send(document.getElementById('comid').value+"insp");
                 document.getElementById("display").innerHTML = "Getting";
             }
         };
