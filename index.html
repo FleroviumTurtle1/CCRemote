@@ -33,7 +33,7 @@
             window.location.reload(true)
         }
         console.log(channel)
-        const w = new WebSocket("ws://"+channel)
+        var w = new WebSocket("ws://"+channel)
         w.addEventListener("open", () => {
             console.log("ok");
             w.send("WebClientConnected")
