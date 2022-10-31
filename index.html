@@ -38,38 +38,38 @@
             ws.send('');
         },20000);
         function up() {
-            ws.send(document.getElementById('comid').value+"up");
+            ws.send("comid "+document.getElementById('comid').value+" up");
         };
         function down() {
-            ws.send(document.getElementById('comid').value+"down");
+            ws.send("comid "+document.getElementById('comid').value+" down");
         };
         function left() {
-            ws.send(document.getElementById('comid').value+"left");
+            ws.send("comid "+document.getElementById('comid').value+" left");
         };
         function right() {
-            ws.send(document.getElementById('comid').value+"right");
+            ws.send("comid "+document.getElementById('comid').value+" right");
         };
         function forward() {
-            ws.send(document.getElementById('comid').value+"for");
+            ws.send("comid "+document.getElementById('comid').value+" for");
         };
         function back() {
-            ws.send(document.getElementById('comid').value+"back");
+            ws.send("comid "+document.getElementById('comid').value+" back");
         };
         function fuel(r) {
             if (r == "get") {
-                ws.send(document.getElementById('comid').value+"getfuel");
+                ws.send("comid "+document.getElementById('comid').value+" getfuel");
                 document.getElementById("display").innerHTML = "Getting";
             }
         }
         function inspect(a) {
             if (a == "down") {
-                ws.send(document.getElementById('comid').value+"inspdown");
+                ws.send("comid "+document.getElementById('comid').value+" inspdown");
                 document.getElementById("display").innerHTML = "Getting";
             } else if (a == "up") {
-                ws.send(document.getElementById('comid').value+"inspup");
+                ws.send("comid "+document.getElementById('comid').value+" inspup");
                 document.getElementById("display").innerHTML = "Getting";
             } else if (a != "up" & a != "down") {
-                ws.send(document.getElementById('comid').value+"insp");
+                ws.send("comid "+document.getElementById('comid').value+" insp");
                 document.getElementById("display").innerHTML = "Getting";
             }
         };
