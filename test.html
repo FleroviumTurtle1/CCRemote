@@ -1,0 +1,39 @@
+<html>
+    <body>
+        <button onclick="send()"></button>
+        <select id="testselect" onchange="chang()"></select>
+    </body>
+    <script>
+        var complist = [];
+        var inselect = [];
+        var channel = prompt("What server are you connecting to:", "2.tcp.ngrok.io:10546")
+        let id = 0;
+        if (channel) {
+            const w = new WebSocket("ws://"+channel)
+            if (w) {
+                w.addEventListener("open", () => {
+                    w.send("WebClientConnected")
+                });
+                w.addEventListener("message", (msg) => {
+                    console.log(msg.data)
+                    if (msg.data.substring(0,4) == "cweb") {
+                        if (!complist.includes(msg.data.substring(4))) {
+                            complist.push(msg.data.substring(4));
+                            var opt = document.createElement('option');
+                            opt.innerHTML = msg.data.substring(4);
+                            document.getElementById('testselect').appendChild(opt);
+                            id = document.getElementById('testselect').value;
+                        }
+                    }
+                });
+                function send() {
+                    console.log(id+" hello")
+                    w.send(id+" hello");
+                }
+                function chang() {
+                    id = id = document.getElementById('testselect').value;
+                }
+            }
+        }
+    </script>
+</html>
