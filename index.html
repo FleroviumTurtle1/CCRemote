@@ -23,8 +23,6 @@
         <div><button class="right" onclick="right()">TurnRight</button></div>
         <button class="button" id="up" onclick="up()">Up</button>
         <button class="button" id="down" onclick="down()">Down</button>
-        <textarea class="custom" id="cusinput" placeholder="turtle.forward()" rows="5" cols="50"></textarea>
-        <button class="custom" onclick="custom()">Execute</button>
     </body>
     <script>
         var complist = [];
@@ -107,9 +105,6 @@
         };
         function back() {
             w.send(id+"back");
-        };
-        function custom() {
-            w.send(id+document.getElementById("cusinput").value);
         };
         function fuel(r) {
             if (r == "get") {
