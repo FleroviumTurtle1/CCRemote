@@ -1,133 +1,39 @@
-<!DOCTYPE html>
 <html>
-    <style>
-        .custom {max-width: 24%; margin-top: 120px; line-height:200%; float: left;}
-        .compid {width: 10%;float: right;font-size:80%;background-color:blueviolet;color:aliceblue;}
-        button.compid {width: 10%;float: right;font-size:90%}
-        .button {background-color: #04AA6D;border: 1px solid green;color: white;padding: 10px 24px;cursor: pointer;width: 50%;display: block;margin-left: auto;margin-right: auto;}
-        .left {background-color: #04AA6D; border: 1px solid green; color: white; padding: 10px 24px; cursor: pointer; width: 25%; display: block; float: left; position: relative; left: 25.2%;}
-        .right {background-color: #04AA6D; border: 1px solid green; color: white; padding: 10px 24px; cursor: pointer; width: 25%; display: block; float: left; position: relative; left: 24.7%;}
-        #up {position: absolute; left: 25.4%; margin-top: 37px; width: 49.2%;}
-        #down {position: absolute; left: 25.4%; width: 49.2%; margin-top: 74px;}
-    </style>
     <body>
-        <button onclick="inspect('down')">Inspect Down</button>
-        <button onclick="inspect('up')">Inspect Up</button>
-        <button onclick="inspect()">Inspect Forward</button>
-        <button onclick="fuel('get')">Get Fuel</button>
-        <p id="display">This Shows The Recieved Data</p>
-        <button class="button" onclick="forward()">Forward</button>
-        <button class="button" onclick="back()">Backward</button>
-        <select id="comid" class="compid" onchange="selecte()"></select>
-        <div><button class="left" onclick="left()">TurnLeft</button></div>
-        <div><button class="right" onclick="right()">TurnRight</button></div>
-        <button class="button" id="up" onclick="up()">Up</button>
-        <button class="button" id="down" onclick="down()">Down</button>
-        <textarea class="custom" id="cusinput" placeholder="turtle.forward()" rows="5" cols="50"></textarea>
-        <button class="custom" onclick="custom()">Execute</button>
+        <button onclick="send()"></button>
+        <select id="testselect" onchange="chang()"></select>
     </body>
     <script>
         var complist = [];
         var inselect = [];
         var channel = prompt("What server are you connecting to:", "2.tcp.ngrok.io:10546")
         let id = 0;
-        if(!channel) {
-            window.location.reload(true)
-        }
-        console.log(channel)
-        const w = new WebSocket("ws://"+channel)
-        w.addEventListener("open", () => {
-            console.log("ok");
-            w.send("WebClientConnected")
-        });
-        var snending = setInterval(function snend() {
-            w.send('');
-        },20000);
-        w.addEventListener("message", (msg) => {
-            console.log(msg.data)
-            if(msg.data.substring(0,3) == "web") {
-                document.getElementById("display").innerHTML = msg.data.substring(3);
-            } else if(msg.data.substring(0,4) == "cweb") {
-                if(complist) {
-                    if(!complist.includes(msg.data.substring(4))) {
-                        complist.push(msg.data.substring(4));
-                        var opt = document.createElement('option');
-                        opt.innerHTML = msg.data.substring(4);
-                        document.getElementById('comid').appendChild(opt);
-                        id = document.getElementById('comid').value;
-                    }
-                } else {
-                    complist = msg.data.substring(4)
-                }
-                for (let x = 0; x < complist.length; ++x) {
-                    console.log(complist[x].tostring);
-                }
-            } else if (msg.data.substring(0,4) == "rweb") {
-                if (complist.includes(msg.data.substring(4)) & complist.indexOf(msg.data.substring(4)) > -1) {
-                    var selectobject = document.getElementById("comid");
-                    for (var i=0; i<selectobject.length; i++) {
-                        if (selectobject.options[i].value == msg.data.substring(4)) {
-                            selectobject.remove(i);
-                            id = document.getElementById('comid').value;
+        if (channel) {
+            const w = new WebSocket("ws://"+channel)
+            if (w) {
+                w.addEventListener("open", () => {
+                    w.send("WebClientConnected")
+                });
+                w.addEventListener("message", (msg) => {
+                    console.log(msg.data)
+                    if (msg.data.substring(0,4) == "cweb") {
+                        if (!complist.includes(msg.data.substring(4))) {
+                            complist.push(msg.data.substring(4));
+                            var opt = document.createElement('option');
+                            opt.innerHTML = msg.data.substring(4);
+                            document.getElementById('testselect').appendChild(opt);
+                            id = document.getElementById('testselect').value;
                         }
                     }
-                    complist.splice(complist.indexOf(msg.data.substring(4)),1);
+                });
+                function send() {
+                    console.log(id+" hello")
+                    w.send(id+" hello");
+                }
+                function chang() {
+                    id = id = document.getElementById('testselect').value;
                 }
             }
-            for (let e = 0; e < complist.length; ++e) {
-                if (!inselect.includes(complist[e])) {
-                    inselect.push(complist[e]);
-                } else if (inselect.length > complist.length) {
-                    if (!complist.includes[inselect[e]]) {
-                        inselect.splice(inselect.indexOf(inselect[e]),1);
-                    }
-                }
-            }
-        });
-        w.addEventListener("close", () => {
-            clearInterval(snending);
-        });
-        function selecte() {
-            id = `comid ${document.getElementById('comid').value} `;
         }
-        function up() {
-            w.send(id+"up");
-        };
-        function down() {
-            w.send(id+"down");
-        };
-        function left() {
-            w.send(id+"left");
-        };
-        function right() {
-            w.send(id+"right");
-        };
-        function forward() {
-            w.send(id+"for");
-        };
-        function back() {
-            w.send(id+"back");
-        };
-        function custom() {
-            w.send(id+document.getElementById("cusinput").value);
-        };
-        function fuel(r) {
-            if (r == "get") {
-                w.send(id+"getfuel");
-                document.getElementById("display").innerHTML = "Getting";
-            }
-        }
-        function inspect(a) {
-            if (a == "down") {
-                w.send(id+"inspdown");
-                document.getElementById("display").innerHTML = "Getting";
-            } else if (a == "up") {
-                w.send(id+"inspup");
-                document.getElementById("display").innerHTML = "Getting";
-            } else if (a != "up" & a != "down") {
-                w.send(id+"insp");
-                document.getElementById("display").innerHTML = "Getting";
-            }
-        };
     </script>
 </html>
