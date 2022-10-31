@@ -18,94 +18,17 @@
         <p id="display">This Shows The Recieved Data</p>
         <button class="button" onclick="forward()">Forward</button>
         <button class="button" onclick="back()">Backward</button>
-        <select id="comid" class="compid"></select>
+        <select id="comid" class="compid" onchange="iding()"></select>
         <div><button class="left" onclick="left()">TurnLeft</button></div>
         <div><button class="right" onclick="right()">TurnRight</button></div>
         <button class="button" id="up" onclick="up()">Up</button>
         <button class="button" id="down" onclick="down()">Down</button>
     </body>
     <script>
-        var selectlist = [];
-        var channel = prompt("What server are you connecting to:", "2.tcp.ngrok.io:10546");
-        if(!channel) {
-            window.location.reload(true)
-        }
-        var ws = new WebSocket("ws://"+channel);
-        ws.addEventListener("open", () => {
-            ws.send("Web Connected");
-        });
-        var snending = setInterval(function snend() {
-            ws.send('');
-        },20000);
-        function up() {
-            ws.send("comid "+document.getElementById('comid').value+" up");
-        };
-        function down() {
-            ws.send("comid "+document.getElementById('comid').value+" down");
-        };
-        function left() {
-            ws.send("comid "+document.getElementById('comid').value+" left");
-        };
-        function right() {
-            ws.send("comid "+document.getElementById('comid').value+" right");
-        };
-        function forward() {
-            ws.send("comid "+document.getElementById('comid').value+" for");
-        };
-        function back() {
-            ws.send("comid "+document.getElementById('comid').value+" back");
-        };
-        function fuel(r) {
-            if (r == "get") {
-                ws.send("comid "+document.getElementById('comid').value+" getfuel");
-                document.getElementById("display").innerHTML = "Getting";
-            }
-        }
-        function inspect(a) {
-            if (a == "down") {
-                ws.send("comid "+document.getElementById('comid').value+" inspdown");
-                document.getElementById("display").innerHTML = "Getting";
-            } else if (a == "up") {
-                ws.send("comid "+document.getElementById('comid').value+" inspup");
-                document.getElementById("display").innerHTML = "Getting";
-            } else if (a != "up" & a != "down") {
-                ws.send("comid "+document.getElementById('comid').value+" insp");
-                document.getElementById("display").innerHTML = "Getting";
-            }
-        };
-        ws.addEventListener("message", (msg) => {
-            if(msg.data.substring(0,3) == "web") {
-                document.getElementById("display").innerHTML = msg.data.substring(3);
-            } else if(msg.data.substring(0,4) == "cweb") {
-                if(selectlist) {
-                    if(!selectlist.includes(msg.data.substring(4))) {
-                        selectlist.push(msg.data.substring(4));
-                        var opt = document.createElement('option');
-                        opt.innerHTML = msg.data.substring(4);
-                        document.getElementById('comid').appendChild(opt);
-                    }
-                } else {
-                    selectlist = msg.data.substring(4)
-                }
-                for (let x = 0; x < selectlist.length; ++x) {
-                    console.log(selectlist[x].tostring);
-                }
-            } else if (msg.data.substring(0,4) == "rweb") {
-                if (selectlist.includes(msg.data.substring(4)) & selectlist.indexOf(msg.data.substring(4)) > -1) {
-                    var selectobject = document.getElementById("comid");
-                    for (var i=0; i<selectobject.length; i++) {
-                        if (selectobject.options[i].value == msg.data.substring(4)) {
-                            selectobject.remove(i);
-                        }
-                    }
-                    selectlist.splice(selectlist.indexOf(msg.data.substring(4)),1);
-                }
-            }
-        });
-        /*var complist = [];
+        var complist = [];
         var inselect = [];
         var channel = prompt("What server are you connecting to:", "2.tcp.ngrok.io:10546")
-        let id = 0;
+        let id = undefined;
         if(!channel) {
             window.location.reload(true)
         }
@@ -129,13 +52,10 @@
                         var opt = document.createElement('option');
                         opt.innerHTML = msg.data.substring(4);
                         document.getElementById('comid').appendChild(opt);
-                        id = document.getElementById('comid').value;
+                        id = `con|${document.getElementById('comid').value.toString()}|`;
                     }
                 } else {
                     complist = msg.data.substring(4)
-                }
-                for (let x = 0; x < complist.length; ++x) {
-                    console.log(complist[x].tostring);
                 }
             } else if (msg.data.substring(0,4) == "rweb") {
                 if (complist.includes(msg.data.substring(4)) & complist.indexOf(msg.data.substring(4)) > -1) {
@@ -143,7 +63,7 @@
                     for (var i=0; i<selectobject.length; i++) {
                         if (selectobject.options[i].value == msg.data.substring(4)) {
                             selectobject.remove(i);
-                            id = document.getElementById('comid').value;
+                            id = `con|${document.getElementById('comid').value.toString()}|`;
                         }
                     }
                     complist.splice(complist.indexOf(msg.data.substring(4)),1);
@@ -162,9 +82,6 @@
         w.addEventListener("close", () => {
             clearInterval(snending);
         });
-        function selecte() {
-            id = `comid ${document.getElementById('comid').value} `;
-        }
         function up() {
             w.send(id+"up");
         };
@@ -184,6 +101,7 @@
             w.send(id+"back");
         };
         function fuel(r) {
+            console.log("retrieving");
             if (r == "get") {
                 w.send(id+"getfuel");
                 document.getElementById("display").innerHTML = "Getting";
@@ -200,6 +118,9 @@
                 w.send(id+"insp");
                 document.getElementById("display").innerHTML = "Getting";
             }
-        };*/
+        };
+        function iding() {
+            id = `con|${document.getElementById('comid').value.toString()}|`;
+        }
     </script>
 </html>
