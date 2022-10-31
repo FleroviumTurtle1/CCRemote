@@ -15,7 +15,7 @@
                     w.send("WebClientConnected")
                 });
                 w.addEventListener("message", (msg) => {
-                    console.log(msg.data)
+                    console.log(msg.data);
                     if (msg.data.substring(0,4) == "cweb") {
                         if (!complist.includes(msg.data.substring(4))) {
                             complist.push(msg.data.substring(4));
@@ -27,8 +27,8 @@
                     }
                 });
                 function send() {
-                    console.log("test "+id+" hello")
-                    w.send("test "+id+" hello");
+                    console.log("test "+id+" right");
+                    w.send("test "+id+" right");
                 }
                 function chang() {
                     id = id = document.getElementById('testselect').value;
