@@ -11,13 +11,13 @@
         <button onclick="inspect()">Inspect Forward</button>
         <button onclick="fuel('get')">Get Fuel</button>
         <p id="display">This Shows The Recieved Data</p>
-        <button class="button" onclick="forward()">Forward</button>
-        <button class="button" onclick="back()">Backward</button>
+        <div><button class="button" onclick="forward()">Forward</button></div>
+        <div><button class="button" onclick="back()">Backward</button></div>
         <select id="comid" class="compid" onchange="iding()"></select>
-        <div><button class="left" onclick="left()">TurnLeft</button></div>
-        <div><button class="right" onclick="right()">TurnRight</button></div>
-        <button class="button" id="up" onclick="up()">Up</button>
-        <button class="button" id="down" onclick="down()">Down</button>
+        <button class="left" onclick="left()">TurnLeft</button>
+        <button class="right" onclick="right()">TurnRight</button>
+        <div><button class="button" id="up" onclick="up()">Up</button></div>
+        <div><button class="button" id="down" onclick="down()">Down</button></div>
     </body>
     <script>
         function setup() {
