@@ -38,12 +38,7 @@
         }
         function draw() {
             background(0);
-            if(mouseIsPressed) {
-                cX = map(-mouseX+width, 0, width, -width/2, width/2);
-                cY = map(-mouseY+height, 0, height, -height/2, height/2);
-            }
-            // Set the camera to the given coordinates
-            camera(cX, cY, (height/2) / tan(PI/6), cX, cY, 0, 0, 1, 0);
+            orbitControl();
             ambientLight(255);
             noStroke();
             normalMaterial()
