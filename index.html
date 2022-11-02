@@ -31,11 +31,23 @@
         <button id="right" onclick="right()"><b>&gt;</b></button></div>
     </body>
     <script>
+        let cX = 0;
+        let cY = 0;
         function setup() {
-            createCanvas(window.innerWidth-(window.innerWidth/99.5), window.innerHeight-(window.innerHeight/99.5));
+            createCanvas(window.innerWidth-(window.innerWidth/99.5), window.innerHeight-(window.innerHeight/99.5),WEBGL);
         }
         function draw() {
             background(0);
+            if(mouseIsPressed) {
+                cX = map(-mouseX+width, 0, width, -width/2, width/2);
+                cY = map(-mouseY+height, 0, height, -height/2, height/2);
+            }
+            // Set the camera to the given coordinates
+            camera(cX, cY, (height/2) / tan(PI/6), cX, cY, 0, 0, 1, 0);
+            ambientLight(255);
+            noStroke();
+            normalMaterial()
+            box(100, 100, 100);
         }
         addEventListener('resize', (event) => {
             resizeCanvas(window.innerWidth-(window.innerWidth/99.5), window.innerHeight-(window.innerHeight/99.5));
