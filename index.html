@@ -34,7 +34,8 @@
     <script>
         let g;
         let img;
-        let priorY = 0;
+        let priorY1 = 0;
+        let priorY2 = 0;
         function preload() {
             g = loadModel('https://raw.githubusercontent.com/JaggedZirconium/CCRemote/main/CCTurtle.obj',true);
             img = loadImage('https://raw.githubusercontent.com/JaggedZirconium/CCRemote/main/CCTex.png');
@@ -63,12 +64,18 @@
             if (Object.keys(touches).length == 2) {
                 let sensitivityZoom = 0.05;
                 let scaleFactor = cnv.height;
-                if (mouseY > priorY) {
+                if (touches[0].y > priorY1) {
                     cnv._curCamera._orbit(0, 0, sensitivityZoom * scaleFactor);
                 } else {
                     cnv._curCamera._orbit(0, 0, -sensitivityZoom * scaleFactor);
                 }
-                priorY = mouseY;
+                if (touches[1].y > priorY2) {
+                    cnv._curCamera._orbit(0, 0, sensitivityZoom * scaleFactor);
+                } else {
+                    cnv._curCamera._orbit(0, 0, -sensitivityZoom * scaleFactor);
+                }
+                priorY1 = touches[0].y;
+                priorY2 = touches[1].y;
             }
             noStroke();
             texture(img);
