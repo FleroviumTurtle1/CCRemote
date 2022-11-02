@@ -6,21 +6,22 @@
         button.nonturns{width:100%;height:100%}
         .unique{float:right;width:18%;height:20px;;font-size:0.9vw}
         .others{position:absolute;right:5px;bottom:0;width:58%;margin-bottom:5px;display:inline-flex}
+        .compid{position:absolute;right:5px;top:5px;width:20%;background-color:goldenrod}
         div{float:left}
-        #all{width:40%;position:absolute;bottom:0;height:40%;margin-bottom:10px;}
-        #fb{width:80%;display:inline-grid;height:100%}
-        #right{width:10%;height:100%;}
-        #left{width:10%;float:left;height:100%;}
+        #all{width:20%;position:absolute;bottom:0;height:20%;margin-bottom:10px;}
+        #fb{width:60%;display:inline-grid;height:100%}
+        #right{width:20%;height:100%;}
+        #left{width:20%;float:left;height:100%;}
         #display{display:block;font-size:0.8vw;height:15px;width:25%;overflow:scroll}
     </style>
     <body>
         <main></main>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.5.0/p5.js"></script>
+        <select id="comid" class="compid" onchange="iding()"></select>
         <div class="others"><input class="unique" readonly="readonly" id="display" value="This Shows The Recieved Data"></input>
         <button class="unique" onclick="inspect('down')">Inspect Down</button>
         <button class="unique" onclick="inspect('up')">Inspect Up</button>
         <button class="unique" onclick="inspect()">Inspect Forward</button>
-        <select class="unique" id="comid" class="compid" onchange="iding()"></select>
         <button class="unique" onclick="fuel('get')">Get Fuel</button></div>
         <div id="all"><button id="left" onclick="left()"><b>&lt;</b></button>
         <div id="fb"><button class="nonturns" id="u" onclick="up()">&#9650;</button>
@@ -36,6 +37,9 @@
         function draw() {
             background(0);
         }
+        addEventListener('resize', (event) => {
+            resizeCanvas(window.screen.width-(window.screen.width/99.5), window.screen.height-(window.screen.height/99.5))
+        });
         var complist = [];
         var inselect = [];
         var channel = prompt("What server are you connecting to:", "2.tcp.ngrok.io:10546")
@@ -94,39 +98,39 @@
             clearInterval(snending);
         });
         function up() {
-            w.send(id+"up");
+            w.send(idd+"up");
         };
         function down() {
-            w.send(id+"down");
+            w.send(idd+"down");
         };
         function left() {
-            w.send(id+"left");
+            w.send(idd+"left");
         };
         function right() {
-            w.send(id+"right");
+            w.send(idd+"right");
         };
         function forward() {
-            w.send(id+"for");
+            w.send(idd+"for");
         };
         function back() {
-            w.send(id+"back");
+            w.send(idd+"back");
         };
         function fuel(r) {
             console.log("retrieving");
             if (r == "get") {
-                w.send(id+"getfuel");
+                w.send(idd+"getfuel");
                 document.getElementById("display").innerHTML = "Getting";
             }
         }
         function inspect(a) {
             if (a == "down") {
-                w.send(id+"inspdown");
+                w.send(idd+"inspdown");
                 document.getElementById("display").innerHTML = "Getting";
             } else if (a == "up") {
-                w.send(id+"inspup");
+                w.send(idd+"inspup");
                 document.getElementById("display").innerHTML = "Getting";
             } else if (a != "up" & a != "down") {
-                w.send(id+"insp");
+                w.send(idd+"insp");
                 document.getElementById("display").innerHTML = "Getting";
             }
         };
