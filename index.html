@@ -10,7 +10,7 @@
         div{float:left}
         #all{width:20%;position:absolute;bottom:0;height:20%;left:8px;margin-bottom:0;}
         #fb{width:60%;display:inline-grid;height:70%}
-        #right{width:20%;height:70%;}
+        #right{width:20%;height:70%}
         #left{width:20%;float:left;height:70%;}
         #display{display:block;font-size:0.8vw;height:15px;width:25%;overflow:scroll}
     </style>
@@ -32,18 +32,23 @@
         <button id="right" onclick="right()"><b>&gt;</b></button></div>
     </body>
     <script>
-        let cX = 0;
-        let cY = 0;
         function setup() {
             createCanvas(window.innerWidth-(window.innerWidth/99.5), window.innerHeight-(window.innerHeight/99.5),WEBGL);
         }
         function draw() {
             background(0);
-            orbitControl();
+            if (mouseIsPressed) {
+                if (mouseButton != RIGHT) {
+                    orbitControl(1,1,0);
+                }
+            }
             ambientLight(255);
             noStroke();
             normalMaterial()
             box(100, 100, 100);
+        }
+        function mouseWheel() {
+            orbitControl(0,0,0.1);
         }
         addEventListener('resize', (event) => {
             resizeCanvas(window.innerWidth-(window.innerWidth/99.5), window.innerHeight-(window.innerHeight/99.5));
