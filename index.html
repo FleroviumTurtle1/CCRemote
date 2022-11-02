@@ -3,18 +3,18 @@
     <style>
         html,body{height:40%}
         button.nonturns{width:100%;height:100%}
-        .unique{float:right}
+        .unique{float:right;width:8%;height:20%;}
         div{float:left}
         #all{width:40%;position:absolute;bottom:0;height:40%}
         #fb{width:80%;display:inline-grid;height:100%}
         #right{width:10%;height:100%;}
         #left{width:10%;float:left;height:100%;}
-        #display{right:0;position:absolute;bottom:0}
+        #display{display:block;font-size:0.9vw;height:15%;width:18%}
     </style>
     <body>
         <main></main>
-        <p id="display">This Shows The Recieved Data</p>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.5.0/p5.js"></script>
+        <input class="unique" readonly="readonly" id="display" value="This Shows The Recieved Data"></input>
         <select class="unique" id="comid" class="compid" onchange="iding()"></select>
         <button class="unique" onclick="inspect('down')">Inspect Down</button>
         <button class="unique" onclick="inspect('up')">Inspect Up</button>
@@ -29,7 +29,7 @@
     </body>
     <script>
         function setup() {
-            createCanvas(window.screen.width-(window.screen.width/75), window.screen.height/2);
+            createCanvas(window.screen.width-(window.screen.width/99), window.screen.height/2);
         }
         function draw() {
             background(0);
