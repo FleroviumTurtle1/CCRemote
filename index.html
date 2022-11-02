@@ -56,11 +56,6 @@
         }
         function draw() {
             background(255);
-            if (mouseIsPressed) {
-                if (mouseButton != RIGHT) {
-                    orbitControl(1,1,0);
-                }
-            }
             if (Object.keys(touches).length == 2) {
                 let sensitivityZoom = 0.05;
                 let scaleFactor = cnv.height;
@@ -76,6 +71,10 @@
                 }
                 priorY1 = touches[0].y;
                 priorY2 = touches[1].y;
+            } else if (mouseIsPressed) {
+                if (mouseButton != RIGHT) {
+                    orbitControl(1,1,0);
+                }
             }
             noStroke();
             texture(img);
