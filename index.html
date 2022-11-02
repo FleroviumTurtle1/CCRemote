@@ -34,13 +34,24 @@
     <script>
         let g;
         let img;
+        let priorY = 0;
         function preload() {
-            g = loadModel('https://raw.githubusercontent.com/JaggedZirconium/CCRemote/main/TestWillCommence.obj',true);
-            img = loadImage('https://raw.githubusercontent.com/JaggedZirconium/CCRemote/main/testure.png');
+            g = loadModel('https://raw.githubusercontent.com/JaggedZirconium/CCRemote/main/CCTurtle.obj');
+            img = loadImage('https://raw.githubusercontent.com/JaggedZirconium/CCRemote/main/CCTex.png');
+        }
+        function zoom(event) {
+        // zoom according to direction of mouseWheelDeltaY rather than value
+            let sensitivityZoom = 0.05;
+            let scaleFactor = cnv.height;
+            if (event.deltaY > 0) {
+                cnv._curCamera._orbit(0, 0, sensitivityZoom * scaleFactor);
+            } else {
+                cnv._curCamera._orbit(0, 0, -sensitivityZoom * scaleFactor);
+            }
         }
         function setup() {
-            createCanvas(window.innerWidth-(window.innerWidth/99.5), window.innerHeight-(window.innerHeight/99.5),WEBGL);
-            noStroke();
+            cnv = createCanvas(window.innerWidth-(window.innerWidth/99.5), window.innerHeight-(window.innerHeight/99.5),WEBGL);
+            cnv.mouseWheel(zoom);
         }
         function draw() {
             background(255);
@@ -49,13 +60,19 @@
                     orbitControl(1,1,0);
                 }
             }
-            shininess(15);
+            noStroke();
+            if (Object.key(touches).length == 2) {
+                let sensitivityZoom = 0.05;
+                let scaleFactor = cnv.height;
+                if (mouseY > priorY) {
+                    cnv._curCamera._orbit(0, 0, sensitivityZoom * scaleFactor);
+                } else {
+                    cnv._curCamera._orbit(0, 0, -sensitivityZoom * scaleFactor);
+                }
+                priorY = mouseY;
+            }
             texture(img);
-            //plane(100,100)
             model(g)
-        }
-        function mouseWheel() {
-            orbitControl(0,0,0.1);
         }
         addEventListener('resize', (event) => {
             resizeCanvas(window.innerWidth-(window.innerWidth/99.5), window.innerHeight-(window.innerHeight/99.5));
