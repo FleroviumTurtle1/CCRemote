@@ -40,18 +40,18 @@
         }
         function setup() {
             createCanvas(window.innerWidth-(window.innerWidth/99.5), window.innerHeight-(window.innerHeight/99.5),WEBGL);
+            noStroke();
         }
         function draw() {
-            background(0);
+            background(255);
             if (mouseIsPressed) {
                 if (mouseButton != RIGHT) {
                     orbitControl(1,1,0);
                 }
             }
-            ambientLight(255);
-            noStroke();
+            shininess(15);
             texture(img);
-            //normalMaterial()
+            //plane(100,100)
             model(g)
         }
         function mouseWheel() {
