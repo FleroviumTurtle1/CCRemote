@@ -1,11 +1,12 @@
 <!DOCTYPE html>
 <html>
     <style>
-        button.nonturns{width:150px;height:85px}
+        button.nonturns{width:150px;height:50px}
         div{float:left}
+        #all{position:absolute;bottom:0}
         #fb{display:inline-grid;}
-        #right{width:20px;height:340px;}
-        #left{width:20px;float:left;height:340px;}
+        #right{width:20px;height:200px;}
+        #left{width:20px;float:left;height:200px;}
         #display{float:right}
     </style>
     <body>
@@ -17,12 +18,12 @@
         <button onclick="inspect('up')">Inspect Up</button>
         <button onclick="inspect()">Inspect Forward</button>
         <button onclick="fuel('get')">Get Fuel</button>
-        <div><button id="left" onclick="left()">&#9664;</button>
+        <div id="all"><button id="left" onclick="left()"><b>&lt;</b></button>
         <div id="fb"><button class="nonturns" id="u" onclick="up()">&#9650;</button>
         <button class="nonturns" id="forw" onclick="forward()">Forward</button>
         <button class="nonturns" id="backw" onclick="back()">Backward</button>
         <button class="nonturns" id="d" onclick="down()">&#9660;</button></div>
-        <button id="right" onclick="right()">&#9654;</button></div>
+        <button id="right" onclick="right()"><b>&gt;</b></button></div>
     </body>
     <script>
         function setup() {
