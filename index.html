@@ -36,7 +36,7 @@
         let img;
         let priorY = 0;
         function preload() {
-            g = loadModel('https://raw.githubusercontent.com/JaggedZirconium/CCRemote/main/CCTurtle.obj');
+            g = loadModel('https://raw.githubusercontent.com/JaggedZirconium/CCRemote/main/CCTurtle.obj',true);
             img = loadImage('https://raw.githubusercontent.com/JaggedZirconium/CCRemote/main/CCTex.png');
         }
         function zoom(event) {
@@ -60,7 +60,6 @@
                     orbitControl(1,1,0);
                 }
             }
-            noStroke();
             if (Object.keys(touches).length == 2) {
                 let sensitivityZoom = 0.05;
                 let scaleFactor = cnv.height;
@@ -71,6 +70,7 @@
                 }
                 priorY = mouseY;
             }
+            noStroke();
             texture(img);
             model(g)
         }
