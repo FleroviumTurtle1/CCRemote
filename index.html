@@ -32,6 +32,12 @@
         <button id="right" onclick="right()"><b>&gt;</b></button></div>
     </body>
     <script>
+        let g;
+        let img;
+        function preload() {
+            g = loadModel('https://raw.githubusercontent.com/JaggedZirconium/CCRemote/main/TestWillCommence.obj',true);
+            img = loadImage('https://raw.githubusercontent.com/JaggedZirconium/CCRemote/main/testure.jpg');
+        }
         function setup() {
             createCanvas(window.innerWidth-(window.innerWidth/99.5), window.innerHeight-(window.innerHeight/99.5),WEBGL);
         }
@@ -44,8 +50,9 @@
             }
             ambientLight(255);
             noStroke();
-            normalMaterial()
-            box(100, 100, 100);
+            texture(img);
+            //normalMaterial()
+            model(g)
         }
         function mouseWheel() {
             orbitControl(0,0,0.1);
