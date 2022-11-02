@@ -1,25 +1,27 @@
 <!DOCTYPE html>
 <html>
     <style>
-        html,body{height:40%}
+        html,body{height:96%}
+        .p5Canvas{position:absolute;right:5px;bottom:5px}
         button.nonturns{width:100%;height:100%}
-        .unique{float:right;width:8%;height:20px;}
+        .unique{float:right;width:18%;height:20px;;font-size:0.9vw}
+        .others{position:absolute;right:5px;bottom:0;width:58%;margin-bottom:5px;display:inline-flex}
         div{float:left}
         #all{width:40%;position:absolute;bottom:0;height:40%;margin-bottom:10px;}
         #fb{width:80%;display:inline-grid;height:100%}
         #right{width:10%;height:100%;}
         #left{width:10%;float:left;height:100%;}
-        #display{display:block;font-size:0.9vw;height:15px;width:18%}
+        #display{display:block;font-size:0.8vw;height:15px;width:25%;overflow:scroll}
     </style>
     <body>
         <main></main>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.5.0/p5.js"></script>
-        <input class="unique" readonly="readonly" id="display" value="This Shows The Recieved Data"></input>
-        <select class="unique" id="comid" class="compid" onchange="iding()"></select>
+        <div class="others"><input class="unique" readonly="readonly" id="display" value="This Shows The Recieved Data"></input>
         <button class="unique" onclick="inspect('down')">Inspect Down</button>
         <button class="unique" onclick="inspect('up')">Inspect Up</button>
         <button class="unique" onclick="inspect()">Inspect Forward</button>
-        <button class="unique" onclick="fuel('get')">Get Fuel</button>
+        <select class="unique" id="comid" class="compid" onchange="iding()"></select>
+        <button class="unique" onclick="fuel('get')">Get Fuel</button></div>
         <div id="all"><button id="left" onclick="left()"><b>&lt;</b></button>
         <div id="fb"><button class="nonturns" id="u" onclick="up()">&#9650;</button>
         <button class="nonturns" id="forw" onclick="forward()">Forward</button>
@@ -29,7 +31,7 @@
     </body>
     <script>
         function setup() {
-            createCanvas(window.screen.width-(window.screen.width/99), window.screen.height/2);
+            createCanvas(window.screen.width-(window.screen.width/99.5), window.screen.height-(window.screen.height/99.5));
         }
         function draw() {
             background(0);
@@ -53,7 +55,7 @@
         w.addEventListener("message", (msg) => {
             console.log(msg.data)
             if(msg.data.substring(0,3) == "web") {
-                document.getElementById("display").innerHTML = msg.data.substring(3);
+                document.getElementById("display").value = msg.data.substring(3);
             } else if(msg.data.substring(0,4) == "cweb") {
                 if(complist) {
                     if(!complist.includes(msg.data.substring(4))) {
