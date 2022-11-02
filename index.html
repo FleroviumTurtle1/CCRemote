@@ -1,23 +1,25 @@
 <!DOCTYPE html>
 <html>
     <style>
-        button.nonturns{width:150px;height:50px}
+        html,body{height:40%}
+        button.nonturns{width:100%;height:100%}
+        .unique{float:right}
         div{float:left}
-        #all{position:absolute;bottom:0}
-        #fb{display:inline-grid;}
-        #right{width:20px;height:200px;}
-        #left{width:20px;float:left;height:200px;}
-        #display{float:right}
+        #all{width:40%;position:absolute;bottom:0;height:40%}
+        #fb{width:80%;display:inline-grid;height:100%}
+        #right{width:10%;height:100%;}
+        #left{width:10%;float:left;height:100%;}
+        #display{right:0;position:absolute;bottom:0}
     </style>
     <body>
         <main></main>
         <p id="display">This Shows The Recieved Data</p>
-        <select id="comid" class="compid" onchange="iding()"></select>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.5.0/p5.js"></script>
-        <button onclick="inspect('down')">Inspect Down</button>
-        <button onclick="inspect('up')">Inspect Up</button>
-        <button onclick="inspect()">Inspect Forward</button>
-        <button onclick="fuel('get')">Get Fuel</button>
+        <select class="unique" id="comid" class="compid" onchange="iding()"></select>
+        <button class="unique" onclick="inspect('down')">Inspect Down</button>
+        <button class="unique" onclick="inspect('up')">Inspect Up</button>
+        <button class="unique" onclick="inspect()">Inspect Forward</button>
+        <button class="unique" onclick="fuel('get')">Get Fuel</button>
         <div id="all"><button id="left" onclick="left()"><b>&lt;</b></button>
         <div id="fb"><button class="nonturns" id="u" onclick="up()">&#9650;</button>
         <button class="nonturns" id="forw" onclick="forward()">Forward</button>
@@ -27,7 +29,7 @@
     </body>
     <script>
         function setup() {
-            createCanvas(400, 400);
+            createCanvas(window.screen.width-(window.screen.width/75), window.screen.height/2);
         }
         function draw() {
             background(0);
