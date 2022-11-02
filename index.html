@@ -1,22 +1,28 @@
 <!DOCTYPE html>
 <html>
     <style>
+        button.nonturns{width:150px;height:85px}
+        div{float:left}
+        #fb{display:inline-grid;}
+        #right{width:20px;height:340px;}
+        #left{width:20px;float:left;height:340px;}
+        #display{float:right}
     </style>
     <body>
         <main></main>
+        <p id="display">This Shows The Recieved Data</p>
+        <select id="comid" class="compid" onchange="iding()"></select>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.5.0/p5.js"></script>
         <button onclick="inspect('down')">Inspect Down</button>
         <button onclick="inspect('up')">Inspect Up</button>
         <button onclick="inspect()">Inspect Forward</button>
         <button onclick="fuel('get')">Get Fuel</button>
-        <div><button class="forw" onclick="forward()">Forward</button></div>
-        <div><button class="backw" onclick="back()">Backward</button></div>
-        <button class="left" onclick="left()">TurnLeft</button>
-        <button class="right" onclick="right()">TurnRight</button>
-        <div><button class="u" id="up" onclick="up()">Up</button></div>
-        <div><button class="d" id="down" onclick="down()">Down</button></div>
-        <p id="display">This Shows The Recieved Data</p>
-        <select id="comid" class="compid" onchange="iding()"></select>
+        <div><button id="left" onclick="left()">&#9664;</button>
+        <div id="fb"><button class="nonturns" id="u" onclick="up()">&#9650;</button>
+        <button class="nonturns" id="forw" onclick="forward()">Forward</button>
+        <button class="nonturns" id="backw" onclick="back()">Backward</button>
+        <button class="nonturns" id="d" onclick="down()">&#9660;</button></div>
+        <button id="right" onclick="right()">&#9654;</button></div>
     </body>
     <script>
         function setup() {
