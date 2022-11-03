@@ -16,6 +16,7 @@
     </style>
     <body>
         <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+        <p id="locatio"></p>
         <main></main>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.5.0/p5.js"></script>
         <select id="comid" class="compid" onchange="iding()"></select>
@@ -32,6 +33,7 @@
         <button id="right" onclick="right()"><b>&gt;</b></button></div>
     </body>
     <script>
+        let p;
         let g;
         let img;
         let priorY1 = 0;
@@ -62,9 +64,15 @@
             cnv = createCanvas(window.innerWidth-(window.innerWidth/99.5), window.innerHeight-(window.innerHeight/99.5),WEBGL);
             cnv.mouseWheel(zoom);
             cam = createCamera();
+            
         }
         function draw() {
             background(255);
+            if (p) {
+                p.remove();
+            }
+            p = createP("Pos: x:"+ox+" y:"+oy+" z:"+oz);
+            p.position(200, 100);
             if (Object.keys(touches).length == 2) {
                 let sensitivityZoom = 0.05;
                 let scaleFactor = cnv.height;
@@ -189,7 +197,6 @@
             oz = oz - 1;
         };
         function fuel(r) {
-            console.log("retrieving");
             if (r == "get") {
                 w.send(idd+"getfuel");
                 document.getElementById("display").innerHTML = "Getting";
