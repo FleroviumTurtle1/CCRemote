@@ -95,10 +95,8 @@
             }
             noStroke();
             normalMaterial();
+            push();
             box(100,100);
-            texture(img);
-            angleMode(DEGREES)
-            rotateZ(180);
             if (ox != oldX) {
                 cam.lookAt(ox*16,-oy*16,oz*16);
                 oldX = ox;
@@ -111,11 +109,16 @@
                 cam.lookAt(ox*16,-oy*16,oz*16);
                 oldZ = oz;
             }
+            angleMode(DEGREES)
+            rotate(180,createVector(ox*16,0,oz*16));
             translate(ox*16,oy*16,oz*16);
+            texture(img);
             model(g);
+            pop();
         }
         addEventListener('resize', (event) => {
             resizeCanvas(window.innerWidth-(window.innerWidth/99.5), window.innerHeight-(window.innerHeight/99.5));
+            cam.lookAt(ox*16,-oy*16,oz*16);
         });
         var complist = [];
         var inselect = [];
