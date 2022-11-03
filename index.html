@@ -72,7 +72,7 @@
             p = createP("Pos: x:"+ox+" y:"+oy+" z:"+oz);
             p.position(200, 100);
             if (Object.keys(touches).length == 2) {
-                let sensitivityZoom = 0.05;
+                let sensitivityZoom = 0.02;
                 let scaleFactor = cnv.height;
                 if (touches[0].y > priorY1) {
                     cnv._curCamera._orbit(0, 0, sensitivityZoom * scaleFactor);
