@@ -40,7 +40,7 @@
         let priorY2 = 0;
         let ox = 0;
         let oy = 0;
-        let oz = 4;
+        let oz = -4;
         let cam;
         let oldX = 0;
         let oldY = 0;
@@ -64,6 +64,7 @@
             cnv = createCanvas(window.innerWidth-(window.innerWidth/99.5), window.innerHeight-(window.innerHeight/99.5),WEBGL);
             cnv.mouseWheel(zoom);
             cam = createCamera();
+            cam.setPosition(-100,-100,-500)
             
         }
         function draw() {
@@ -97,18 +98,7 @@
             normalMaterial();
             push();
             box(100,100);
-            if (ox != oldX) {
-                cam.lookAt(ox*16,-oy*16,oz*16);
-                oldX = ox;
-            }
-            if (oy != oldY) {
-                cam.lookAt(ox*16,-oy*16,oz*16);
-                oldY = oy;
-            }
-            if (oz != oldZ) {
-                cam.lookAt(ox*16,-oy*16,oz*16);
-                oldZ = oz;
-            }
+            cam.lookAt(ox*16,-oy*16,oz*16);
             angleMode(DEGREES);
             rotateZ(180);
             translate(ox*16,oy*16,oz*16);
@@ -118,7 +108,6 @@
         }
         addEventListener('resize', (event) => {
             resizeCanvas(window.innerWidth-(window.innerWidth/99.5), window.innerHeight-(window.innerHeight/99.5));
-            cam.lookAt(ox*16,-oy*16,oz*16);
         });
         var complist = [];
         var inselect = [];
