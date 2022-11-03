@@ -38,13 +38,10 @@
         let img;
         let priorY1 = 0;
         let priorY2 = 0;
-        let ox = 0;
-        let oy = 0;
-        let oz = -4;
+        let ox = 32;
+        let oy = 32;
+        let oz = -10;
         let cam;
-        let oldX = 0;
-        let oldY = 0;
-        let oldZ = 0;
         function preload() {
             //size of model = 16
             g = loadModel('https://raw.githubusercontent.com/JaggedZirconium/CCRemote/main/CCTurtle.obj');
@@ -64,7 +61,7 @@
             cnv = createCanvas(window.innerWidth-(window.innerWidth/99.5), window.innerHeight-(window.innerHeight/99.5),WEBGL);
             cnv.mouseWheel(zoom);
             cam = createCamera();
-            cam.setPosition(-100,-100,-500)
+            cam.setPosition(ox*16-50,oy*16-50,oz*16-100)
             
         }
         function draw() {
@@ -98,7 +95,7 @@
             normalMaterial();
             push();
             box(100,100);
-            cam.lookAt(ox*16,-oy*16,oz*16);
+            cam.lookAt(-ox*16,-oy*16,oz*16);
             angleMode(DEGREES);
             rotateZ(180);
             translate(ox*16,oy*16,oz*16);
