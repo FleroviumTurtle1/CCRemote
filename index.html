@@ -36,7 +36,11 @@
         let img;
         let priorY1 = 0;
         let priorY2 = 0;
+        let ox = 0;
+        let oy = 0;
+        let oz = 0;
         function preload() {
+            //size of model = 16
             g = loadModel('https://raw.githubusercontent.com/JaggedZirconium/CCRemote/main/CCTurtle.obj');
             img = loadImage('https://raw.githubusercontent.com/JaggedZirconium/CCRemote/main/CCTex.png');
         }
@@ -78,7 +82,10 @@
             }
             noStroke();
             texture(img);
-            k = model(g);
+            angleMode(DEGREES)
+            rotateZ(180);
+            translate(ox*16,oy*16,oz*16);
+            model(g);
         }
         addEventListener('resize', (event) => {
             resizeCanvas(window.innerWidth-(window.innerWidth/99.5), window.innerHeight-(window.innerHeight/99.5));
@@ -142,9 +149,11 @@
         });
         function up() {
             w.send(idd+"up");
+            oy = oy + 1;
         };
         function down() {
             w.send(idd+"down");
+            oy = oy - 1;
         };
         function left() {
             w.send(idd+"left");
@@ -154,9 +163,11 @@
         };
         function forward() {
             w.send(idd+"for");
+            oz = oz + 1;
         };
         function back() {
             w.send(idd+"back");
+            oz = oz - 1;
         };
         function fuel(r) {
             console.log("retrieving");
