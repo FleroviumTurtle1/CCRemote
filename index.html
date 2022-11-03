@@ -109,8 +109,8 @@
                 cam.lookAt(ox*16,-oy*16,oz*16);
                 oldZ = oz;
             }
-            angleMode(DEGREES)
-            rotate(180,createVector(ox*16,0,oz*16));
+            angleMode(DEGREES);
+            rotateZ(180);
             translate(ox*16,oy*16,oz*16);
             texture(img);
             model(g);
@@ -193,11 +193,11 @@
         };
         function forward() {
             w.send(idd+"for");
-            oz = oz + 1;
+            oz = oz - 1;
         };
         function back() {
             w.send(idd+"back");
-            oz = oz - 1;
+            oz = oz + 1;
         };
         function fuel(r) {
             if (r == "get") {
