@@ -38,8 +38,11 @@
         let priorY2 = 0;
         let ox = 0;
         let oy = 0;
-        let oz = 0;
+        let oz = 4;
         let cam;
+        let oldX = 0;
+        let oldY = 0;
+        let oldZ = 0;
         function preload() {
             //size of model = 16
             g = loadModel('https://raw.githubusercontent.com/JaggedZirconium/CCRemote/main/CCTurtle.obj');
@@ -83,9 +86,23 @@
                 }
             }
             noStroke();
+            normalMaterial();
+            box(100,100);
             texture(img);
             angleMode(DEGREES)
             rotateZ(180);
+            if (ox != oldX) {
+                cam.lookAt(ox*16,-oy*16,oz*16);
+                oldX = ox;
+            }
+            if (oy != oldY) {
+                cam.lookAt(ox*16,-oy*16,oz*16);
+                oldY = oy;
+            }
+            if (oz != oldZ) {
+                cam.lookAt(ox*16,-oy*16,oz*16);
+                oldZ = oz;
+            }
             translate(ox*16,oy*16,oz*16);
             model(g);
         }
