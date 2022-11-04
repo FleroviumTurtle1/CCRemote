@@ -58,8 +58,22 @@
             cam = createCamera();
             cam.setPosition(ox*16-50,-oy*16-50,oz*16-100);
         }
-        function emptybox(s) {
-            si = s/2;
+        function emptybox(s,co,c,v,b) {
+            si = s/2.05;
+            push();
+            if (c != undefined & v != undefined & b != undefined) {
+                translate(c,v,b)
+            } else {
+                c = 0;
+                v = 0;
+                b = 0;
+            }
+            if (co != undefined) {
+                stroke(co);
+            } else {
+                stroke("black");
+            }
+            strokeWeight(0.5);
             line(si,si,-si,si,si,si);
             line(-si,si,-si,-si,si,si);
             line(-si,si,si,si,si,si);
@@ -72,6 +86,10 @@
             line(-si,-si,si,-si,si,si);
             line(si,-si,-si,si,si,-si);
             line(-si,-si,-si,-si,si,-si);
+            pop();
+            if (c !=undefined & v != undefined & b != undefined) {
+                return(createVector(c,v,b));
+            }
         }
         function zoom(event) {
         // zoom according to direction of mouseWheelDeltaY rather than value
@@ -112,11 +130,8 @@
                     orbitControl(1,1,0);
                 }
             }
-            push();
-            stroke(255,0,0,102);
-            fill(color(255, 0, 0));
-            emptybox(16);
-            pop();
+            emptybox(16,"red");
+            emptybox(16,"green",0,0,-16);
             noStroke();
             normalMaterial();
             push();
@@ -226,19 +241,19 @@
         function fuel(r) {
             if (r == "get") {
                 w.send(idd+"getfuel");
-                document.getElementById("display").innerHTML = "Getting";
+                document.getElementById("display").value = "Getting";
             }
         }
         function inspect(a) {
             if (a == "down") {
                 w.send(idd+"inspdown");
-                document.getElementById("display").innerHTML = "Getting";
+                document.getElementById("display").value = "Getting";
             } else if (a == "up") {
                 w.send(idd+"inspup");
-                document.getElementById("display").innerHTML = "Getting";
+                document.getElementById("display").value = "Getting";
             } else if (a != "up" & a != "down") {
                 w.send(idd+"insp");
-                document.getElementById("display").innerHTML = "Getting";
+                document.getElementById("display").value = "Getting";
             }
         };
         function iding() {
