@@ -144,7 +144,7 @@
                     orbitControl(1,1,0);
                 }
             }
-            emptybox(16,"red");
+            emptybox(16,"green");
             emptybox(16,"green",0,0,-16);
             emptybox(16,"green",0,0,-128);
             emptybox(16,"green",0,-128,-16);
@@ -162,6 +162,15 @@
             if (cz != oldz) {
                 cam.setPosition(cam.eyeX,cam.eyeY,cam.eyeZ+16*(cz-oldz));
                 oldz = cz;
+            }
+            if (15 > cam.eyeX & cam.eyeX > -15) {
+                cam.setPosition(cam.eyeX*2,cam.eyeY,cam.eyeZ);
+            }
+            if (15 > cam.eyeY & cam.eyeY > -15) {
+                cam.setPosition(cam.eyeX,cam.eyeY*2,cam.eyeZ);
+            }
+            if (15 > cam.eyeZ & cam.eyeZ > -15) {
+                cam.setPosition(cam.eyeX,cam.eyeY,cam.eyeZ*2);
             }
             angleMode(DEGREES);
             rotateZ(180);
