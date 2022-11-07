@@ -201,7 +201,9 @@
             if (r != undefined & ve != undefined & c == 1) {
                 bl = createP("minecraft:air");
                 bl.position(x,y);
-                console.log("x:"+ve.x+" y:"+ve.y+" z:"+ve.z)
+                if (mouseIsPressed) {
+                    console.log("x:"+ve.x+" y:"+ve.y+" z:"+ve.z);
+                }
                 ve = undefined;
                 r = undefined;
             }
