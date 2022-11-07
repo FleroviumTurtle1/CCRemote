@@ -31,6 +31,7 @@
         <button class="nonturns" id="backw" onclick="back()">Backward</button>
         <button class="nonturns" id="d" onclick="down()">&#9660;</button></div>
         <button id="right" onclick="right()"><b>&gt;</b></button></div>
+        <script src="screenpositioning.js"></script>
     </body>
     <script>
         let p;
@@ -38,14 +39,22 @@
         let img;
         let priorY1 = 0;
         let priorY2 = 0;
-        let ox = 0;
-        let oy = 1;
-        let oz = 0;
-        let oldx = ox;
-        let oldy = oy;
-        let oldz = oz;
+        let cx = 0;
+        let cy = 1;
+        let cz = 0;
+        let oldx = cx;
+        let oldy = cy;
+        let oldz = cz;
         let cam;
+        let ve;
         let gl;
+        let r;
+        let c;
+        let x = 0;
+        let y = 0;
+        let bl;
+        let vecs = [];
+        let vecsnear = [];
         function preload() {
             //size of model = 16
             g = loadModel('https://raw.githubusercontent.com/JaggedZirconium/CCRemote/main/CCTurtle.obj');
@@ -56,7 +65,8 @@
             cnv.mouseWheel(zoom);
             gl = cnv.GL;
             cam = createCamera();
-            cam.setPosition(ox*16-50,-oy*16-50,oz*16-100);
+            cam.setPosition(cx*16-50,-cy*16-50,cz*16-100);
+            addScreenPositionFunction();
         }
         function emptybox(s,co,c,v,b) {
             si = s/2.05;
@@ -88,14 +98,18 @@
             line(-si,-si,-si,-si,si,-si);
             pop();
             if (c !=undefined & v != undefined & b != undefined) {
-                return(createVector(c,v,b));
+                v = createVector(c,v,b);
+                if (!vecs.includes(v)) {
+                    vecs.push(v);
+                }
+                return(v);
             }
         }
         function zoom(event) {
         // zoom according to direction of mouseWheelDeltaY rather than value
             let sensitivityZoom = 0.05;
             let scaleFactor = cnv.height;
-            if (event.deltaY > 0) {
+            if (event.deltaY > 0 & eyeZ < 550) {
                 cnv._curCamera._orbit(0, 0, sensitivityZoom * scaleFactor);
             } else if(eyeZ > 151) {
                 cnv._curCamera._orbit(0, 0, -sensitivityZoom * scaleFactor);
@@ -103,22 +117,22 @@
         }
         function draw() {
             setAttributes('alpha', false);
-            eyeZ =  Math.pow((Math.pow(cam.eyeX - ox*16, 2) + Math.pow(cam.eyeY - oy*16, 2) + Math.pow(cam.eyeZ - oz*16, 2) * 1.0), 0.5).toFixed(10);
+            eyeZ =  Math.pow((Math.pow(cam.eyeX - cx, 2) + Math.pow(cam.eyeY - cy, 2) + Math.pow(cam.eyeZ - cz, 2) * 1.0), 0.5).toFixed(10);
             background(255);
             if (p) {
                 p.remove();
             }
-            p = createP("Pos: x:"+ox+" y:"+oy+" z:"+oz);
+            p = createP("Pos: x:"+cx+" y:"+cy+" z:"+cz);
             p.position(200, 100);
             if (Object.keys(touches).length == 2) {
                 let sensitivityZoom = 0.02;
                 let scaleFactor = cnv.height;
-                if (touches[0].y > priorY1) {
+                if (touches[0].y > priorY1 & eyeZ < 550) {
                     cnv._curCamera._orbit(0, 0, sensitivityZoom * scaleFactor);
                 } else if(eyeZ > 151) {
                     cnv._curCamera._orbit(0, 0, -sensitivityZoom * scaleFactor);
                 }
-                if (touches[1].y > priorY2) {
+                if (touches[1].y > priorY2 & eyeZ < 550) {
                     cnv._curCamera._orbit(0, 0, sensitivityZoom * scaleFactor);
                 } else if(eyeZ > 151) {
                     cnv._curCamera._orbit(0, 0, -sensitivityZoom * scaleFactor);
@@ -132,32 +146,64 @@
             }
             emptybox(16,"red");
             emptybox(16,"green",0,0,-16);
+            emptybox(16,"green",0,0,-128);
+            emptybox(16,"green",0,-128,-16);
             noStroke();
             normalMaterial();
             push();
-            if (oy != oldy) {
-                cam.setPosition(cam.eyeX,cam.eyeY-16*(oy-oldy),cam.eyeZ);
-                oldy = oy;
+            if (cy != oldy) {
+                cam.setPosition(cam.eyeX,cam.eyeY-16*(cy-oldy),cam.eyeZ);
+                oldy = cy;
             }
-            if (ox != oldx) {
-                cam.setPosition(cam.eyeX+16*(ox-oldx),cam.eyeY,cam.eyeZ);
-                oldx = ox;
+            if (cx != oldx) {
+                cam.setPosition(cam.eyeX+16*(cx-oldx),cam.eyeY,cam.eyeZ);
+                oldx = cx;
             }
-            if (oz != oldz) {
-                cam.setPosition(cam.eyeX,cam.eyeY,cam.eyeZ+16*(oz-oldz));
-                oldz = oz;
+            if (cz != oldz) {
+                cam.setPosition(cam.eyeX,cam.eyeY,cam.eyeZ+16*(cz-oldz));
+                oldz = cz;
             }
             angleMode(DEGREES);
             rotateZ(180);
-            translate(ox*16,oy*16,oz*16);
+            translate(cx*16,cy*16,cz*16);
             texture(img);
             model(g);
-            cam.lookAt(ox*16,-oy*16,oz*16);
+            cam.lookAt(cx*16,-cy*16,cz*16);
             pop();
+            if (vecs[0]) {
+                r = dist(vecs[0].x,vecs[0].y,vecs[0].z,cam.eyeX,cam.eyeY,cam.eyeZ);
+                ve = vecs[0];
+                c = 0;
+                for (let o = 0; o < vecs.length; o++) {
+                    u = screenPosition(vecs[o]);
+                    d = dist(x-width/2,y-height/2, u.x, u.y);
+                    if (d < 32/(eyeZ/350)) {
+                        c = 1;
+                        if (r > dist(vecs[o].x,vecs[o].y,vecs[o].z,cam.eyeX,cam.eyeY,cam.eyeZ)) {
+                            r = dist(vecs[o].x,vecs[o].y,vecs[o].z,cam.eyeX,cam.eyeY,cam.eyeZ);
+                            ve = vecs[o];
+                        }
+                    }
+                }
+            }
+            if (bl) {
+                bl.remove();
+            }
+            if (r != undefined & ve != undefined & c == 1) {
+                bl = createP("minecraft:air");
+                bl.position(x,y);
+                console.log("x:"+ve.x+" y:"+ve.y+" z:"+ve.z)
+                ve = undefined;
+                r = undefined;
+            }
         }
         addEventListener('resize', (event) => {
             resizeCanvas(window.innerWidth-(window.innerWidth/99.5), window.innerHeight-(window.innerHeight/99.5));
-            cam.setPosition(ox*16-50,-oy*16-50,oz*16-100);
+            cam.setPosition(cx*16-50,-cy*16-50,cz*16-100);
+        });
+        addEventListener('mousemove', (event) => {
+            x = event.clientX;
+            y = event.clientY;
         });
         var complist = [];
         var inselect = [];
@@ -218,11 +264,11 @@
         });
         function up() {
             w.send(idd+"up");
-            oy = oy + 1;
+            cy = cy + 1;
         };
         function down() {
             w.send(idd+"down");
-            oy = oy - 1;
+            cy = cy - 1;
         };
         function left() {
             w.send(idd+"left");
@@ -232,11 +278,11 @@
         };
         function forward() {
             w.send(idd+"for");
-            oz = oz - 1;
+            cz = cz - 1;
         };
         function back() {
             w.send(idd+"back");
-            oz = oz + 1;
+            cz = cz + 1;
         };
         function fuel(r) {
             if (r == "get") {
