@@ -73,10 +73,6 @@
             push();
             if (c != undefined & v != undefined & b != undefined) {
                 translate(c,v,b)
-            } else {
-                c = 0;
-                v = 0;
-                b = 0;
             }
             if (co != undefined) {
                 stroke(co);
@@ -116,7 +112,7 @@
             }
         }
         function draw() {
-            setAttributes('alpha', false);
+            // 0,0,0 is no longer allowed in the grasp of screenPosition()
             eyeZ =  Math.pow((Math.pow(cam.eyeX - cx, 2) + Math.pow(cam.eyeY - cy, 2) + Math.pow(cam.eyeZ - cz, 2) * 1.0), 0.5).toFixed(10);
             background(255);
             if (p) {
