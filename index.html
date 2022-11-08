@@ -161,6 +161,7 @@
             emptybox(16,"aqua",-16,0,-16)
             noStroke();
             normalMaterial();
+            angleMode(DEGREES);
             push();
             if (cy != oldy) {
                 cam.setPosition(cam.eyeX,cam.eyeY-16*(cy-oldy),cam.eyeZ);
@@ -174,12 +175,17 @@
                 cam.setPosition(cam.eyeX,cam.eyeY,cam.eyeZ+16*(cz-oldz));
                 oldz = cz;
             }
-            angleMode(DEGREES);
             rotateZ(180);
             translate(cx*16,cy*16,cz*16);
             texture(img1);
             model(g1);
             cam.lookAt(cx*16,-cy*16,cz*16);
+            pop();
+            push();
+            rotateZ(180);
+            translate(32,1,0);
+            texture(img2);
+            model(g2);
             pop();
             if (vecs[0]) {
                 let j = true;
