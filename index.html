@@ -178,7 +178,8 @@
             cam.lookAt(cx*16,-cy*16,cz*16);
             pop();
             if (vecs[0]) {
-                r = Number.MAX_SAFE_INTEGER;
+                let j = true;
+                r = 0;
                 ve = createVector(vecs[0][0],vecs[0][1],vecs[0][2]);
                 c = 0;
                 for (let o = 0; o < vecs.length; o++) {
@@ -186,7 +187,8 @@
                     d = dist(x-width/2,y-height/2, u.x, u.y);
                     if (d < 32/(eyeZ/350)) {
                         c = 1;
-                        if (r > dist(vecs[o][0],vecs[o][1],vecs[o][2],cam.eyeX,cam.eyeY,cam.eyeZ)) {
+                        if (j | r > dist(vecs[o][0],vecs[o][1],vecs[o][2],cam.eyeX,cam.eyeY,cam.eyeZ)) {
+                            j = false;
                             r = dist(vecs[o][0],vecs[o][1],vecs[o][2],cam.eyeX,cam.eyeY,cam.eyeZ);
                             ve = createVector(vecs[o][0],vecs[o][1],vecs[o][2]);
                         }
