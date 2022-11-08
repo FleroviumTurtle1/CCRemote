@@ -185,7 +185,7 @@
                 for (let o = 0; o < vecs.length; o++) {
                     u = screenPosition(vecs[o]);
                     d = dist(x-width/2,y-height/2, u.x, u.y);
-                    if (d < 32/(eyeZ/350)) {
+                    if (d < 32/(eyeZ*2/350)) {
                         c = 1;
                         if (j | r > dist(vecs[o][0],vecs[o][1],vecs[o][2],cam.eyeX,cam.eyeY,cam.eyeZ)) {
                             j = false;
