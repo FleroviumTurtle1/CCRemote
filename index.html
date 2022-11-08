@@ -50,11 +50,12 @@
         let gl;
         let r;
         let c;
+        let bi = true;
         let x = 0;
         let y = 0;
         let bl;
         let vecs = [];
-        let vecsnear = [];
+        let vkeys = {};
         function preload() {
             //size of model = 16
             g = loadModel('https://raw.githubusercontent.com/JaggedZirconium/CCRemote/main/CCTurtle.obj');
@@ -97,13 +98,18 @@
             line(si,-si,-si,si,si,-si);
             line(-si,-si,-si,-si,si,-si);
             pop();
-            if (c !=undefined & v != undefined & b != undefined) {
-                v = createVector(c,v,b);
-                if (!vecs.includes(v)) {
-                    vecs.push(v);
+            n = [c,v,b];
+            Object.keys(vkeys).forEach(function(item) {
+                if (item == n) {
+                    bi = false;
                 }
-                return(v);
+            });
+            if (bi) {
+                vecs.push(n);
             }
+            vkeys[n] = "";
+            bi = true;
+            return(n);
         }
         function zoom(event) {
         // zoom according to direction of mouseWheelDeltaY rather than value
@@ -163,15 +169,6 @@
                 cam.setPosition(cam.eyeX,cam.eyeY,cam.eyeZ+16*(cz-oldz));
                 oldz = cz;
             }
-            if (15 > cam.eyeX & cam.eyeX > -15) {
-                cam.setPosition(cam.eyeX*2,cam.eyeY,cam.eyeZ);
-            }
-            if (15 > cam.eyeY & cam.eyeY > -15) {
-                cam.setPosition(cam.eyeX,cam.eyeY*2,cam.eyeZ);
-            }
-            if (15 > cam.eyeZ & cam.eyeZ > -15) {
-                cam.setPosition(cam.eyeX,cam.eyeY,cam.eyeZ*2);
-            }
             angleMode(DEGREES);
             rotateZ(180);
             translate(cx*16,cy*16,cz*16);
@@ -180,17 +177,17 @@
             cam.lookAt(cx*16,-cy*16,cz*16);
             pop();
             if (vecs[0]) {
-                r = dist(vecs[0].x,vecs[0].y,vecs[0].z,cam.eyeX,cam.eyeY,cam.eyeZ);
-                ve = vecs[0];
+                r = Number.MAX_SAFE_INTEGER;
+                ve = createVector(vecs[0][0],vecs[0][1],vecs[0][2]);
                 c = 0;
                 for (let o = 0; o < vecs.length; o++) {
                     u = screenPosition(vecs[o]);
                     d = dist(x-width/2,y-height/2, u.x, u.y);
                     if (d < 32/(eyeZ/350)) {
                         c = 1;
-                        if (r > dist(vecs[o].x,vecs[o].y,vecs[o].z,cam.eyeX,cam.eyeY,cam.eyeZ)) {
-                            r = dist(vecs[o].x,vecs[o].y,vecs[o].z,cam.eyeX,cam.eyeY,cam.eyeZ);
-                            ve = vecs[o];
+                        if (r > dist(vecs[o][0],vecs[o][1],vecs[o][2],cam.eyeX,cam.eyeY,cam.eyeZ)) {
+                            r = dist(vecs[o][0],vecs[o][1],vecs[o][2],cam.eyeX,cam.eyeY,cam.eyeZ);
+                            ve = createVector(vecs[o][0],vecs[o][1],vecs[o][2]);
                         }
                     }
                 }
