@@ -35,8 +35,10 @@
     </body>
     <script>
         let p;
-        let g;
-        let img;
+        let g1;
+        let img1;
+        let g2;
+        let img2;
         let priorY1 = 0;
         let priorY2 = 0;
         let cx = 0;
@@ -58,8 +60,10 @@
         let vkeys = {};
         function preload() {
             //size of model = 16
-            g = loadModel('https://raw.githubusercontent.com/JaggedZirconium/CCRemote/main/assests/CCTurtle.obj');
-            img = loadImage('https://raw.githubusercontent.com/JaggedZirconium/CCRemote/main/assests/CCTex.png');
+            g1 = loadModel('https://raw.githubusercontent.com/JaggedZirconium/CCRemote/main/assests/CCTurtle.obj');
+            img1 = loadImage('https://raw.githubusercontent.com/JaggedZirconium/CCRemote/main/assests/CCTex.png');
+            g2 = loadModel('https://raw.githubusercontent.com/JaggedZirconium/CCRemote/main/assests/CCTurtleGrey.obj');
+            img2 = loadImage('https://raw.githubusercontent.com/JaggedZirconium/CCRemote/main/assests/CCTexGrey.png');
         }
         function setup() {
             cnv = createCanvas(window.innerWidth-(window.innerWidth/99.5), window.innerHeight-(window.innerHeight/99.5),WEBGL);
@@ -173,8 +177,8 @@
             angleMode(DEGREES);
             rotateZ(180);
             translate(cx*16,cy*16,cz*16);
-            texture(img);
-            model(g);
+            texture(img1);
+            model(g1);
             cam.lookAt(cx*16,-cy*16,cz*16);
             pop();
             if (vecs[0]) {
