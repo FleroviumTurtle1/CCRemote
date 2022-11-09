@@ -73,7 +73,7 @@
             cam.setPosition(cx*16-50,-cy*16-50,cz*16-100);
             addScreenPositionFunction();
         }
-        function emptybox(s,co,c,v,b) {
+        function emptybox(nam,s,co,c,v,b) {
             si = s/2.05;
             push();
             if (c != undefined & v != undefined & b != undefined) {
@@ -111,7 +111,7 @@
             if (bi) {
                 vecs.push(n);
             }
-            vkeys[n] = "";
+            vkeys[n] = nam;
             bi = true;
             return(n);
         }
@@ -154,11 +154,11 @@
                     orbitControl(1,1,0);
                 }
             }
-            emptybox(16,"red");
-            emptybox(16,"green",0,0,-16);
-            emptybox(16,"blue",0,0,-128);
-            emptybox(16,"green",0,-128,-16);
-            emptybox(16,"aqua",-16,0,-16)
+            emptybox("minecraft:grass",16,"red");
+            emptybox("minecraft:grass",16,"green",0,0,-16);
+            emptybox("minecraft:dirt",16,"blue",0,0,-128);
+            emptybox("minecraft:air",16,"green",0,-128,-16);
+            emptybox("minecraft:dirt",16,"aqua",-16,0,-16);
             noStroke();
             normalMaterial();
             angleMode(DEGREES);
@@ -209,7 +209,7 @@
                 bl.remove();
             }
             if (r != undefined & ve != undefined & c == 1) {
-                bl = createP("minecraft:air");
+                bl = createP(vkeys[`${ve.x},${ve.y},${ve.z}`]);
                 bl.position(x,y);
                 if (mouseIsPressed) {
                     console.log("x:"+ve.x+" y:"+ve.y+" z:"+ve.z);
