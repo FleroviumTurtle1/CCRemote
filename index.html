@@ -116,7 +116,6 @@
             return(n);
         }
         function zoom(event) {
-        // zoom according to direction of mouseWheelDeltaY rather than value
             let sensitivityZoom = 0.05;
             let scaleFactor = cnv.height;
             if (event.deltaY > 0 & eyeZ < 550) {
@@ -195,7 +194,7 @@
                 for (let o = 0; o < vecs.length; o++) {
                     u = screenPosition(vecs[o]);
                     d = dist(x-width/2,y-height/2, u.x, u.y);
-                    if (d < 16/map(eyeZ,100,700,1,3)) {
+                    if (d < 16/map(eyeZ,100,700,1,2)) {
                         c = 1;
                         if (j | r > dist(vecs[o][0],vecs[o][1],vecs[o][2],cam.eyeX,cam.eyeY,cam.eyeZ)) {
                             j = false;
