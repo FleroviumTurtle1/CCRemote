@@ -171,10 +171,10 @@
                 oldz = cz;
             }
             rotateZ(180);
-            translate(cx*16,cy*16,cz*16);
+            translate(cx*16,cy*16,-cz*16);
             texture(img1);
             model(g1);
-            cam.lookAt(cx*16,-cy*16,-cz*16);
+            cam.lookAt(cx*16,-cy*16,cz*16);
             pop();
             push();
             rotateZ(180);
