@@ -73,7 +73,7 @@
             cam.setPosition(cx*16-50,-cy*16-50,cz*16-100);
             addScreenPositionFunction();
         }
-        function emptybox(nam,s,co,c,v,b) {
+        function emptybox(nam,s,col,c,v,b) {
             si = s/2.05;
             push();
             if (c != undefined & v != undefined & b != undefined) {
@@ -83,8 +83,8 @@
                 v = 0;
                 b = 0;
             }
-            if (co != undefined) {
-                stroke(co);
+            if (col != undefined) {
+                stroke(col);
             } else {
                 stroke("black");
             }
@@ -153,11 +153,7 @@
                     orbitControl(1,1,0);
                 }
             }
-            emptybox("minecraft:grass",16,"red");
-            emptybox("minecraft:grass",16,"green",0,0,-16);
-            emptybox("minecraft:dirt",16,"blue",0,0,-128);
-            emptybox("minecraft:air",16,"green",0,-128,-16);
-            emptybox("minecraft:dirt",16,"aqua",-16,0,-16);
+            emptybox("minecraft:stone",16,"grey",0,0,0);
             noStroke();
             normalMaterial();
             angleMode(DEGREES);
