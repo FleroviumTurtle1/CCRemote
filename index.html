@@ -231,20 +231,23 @@
         });
         var complist = [];
         var inselect = [];
-        var channel = prompt("What server are you connecting to:", "2.tcp.ngrok.io:10546")
-        let idd = undefined;
-        if(!channel) {
-            window.location.reload(true)
+        function start() {
+            var channel = prompt("What server are you connecting to:", "2.tcp.ngrok.io:10546")
+            let idd = undefined;
+            if(!channel) {
+                window.location.reload(true)
+            }
+            console.log(channel)
+            var w = new WebSocket("ws://"+channel);
+            var snending = setInterval(function snend() {
+                w.send('');
+            },20000);
         }
-        console.log(channel)
-        var w = new WebSocket("ws://"+channel);
+        start();
         w.addEventListener("open", () => {
             console.log("ok");
             w.send("WebClientConnected")
         });
-        var snending = setInterval(function snend() {
-            w.send('');
-        },20000);
         w.addEventListener("message", (msg) => {
             console.log(msg.data)
             if(msg.data.substring(0,3) == "web") {
@@ -299,6 +302,7 @@
         });
         w.addEventListener("close", () => {
             clearInterval(snending);
+            start();
         });
         function up() {
             w.send(idd+"up");
