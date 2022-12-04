@@ -242,7 +242,7 @@
             w = new WebSocket("ws://"+channel);
         }
         while (!w) {
-            w = new WebSocket("ws://"+channel);
+            attemptconnect()
         }
         w.addEventListener("open", () => {
             console.log("ok");
