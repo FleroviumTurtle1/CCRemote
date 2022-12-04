@@ -189,7 +189,7 @@
                     cy = compsel[document.getElementById('comid').value][1];
                     cz = compsel[document.getElementById('comid').value][2];
                     ro = compsel[document.getElementById('comid').value][3];
-                    addvec(cx*16,-cy*16,-cz*16,document.getElementById('comid').value,true);
+                    addvec(cx*16,-cy*16,cz*16,document.getElementById('comid').value,true);
                 }
                 if (cy != oldy) {
                     cam.setPosition(cam.eyeX,cam.eyeY-16*(cy-oldy),cam.eyeZ);
@@ -200,10 +200,10 @@
                     oldx = cx;
                 }
                 if (cz != oldz) {
-                    cam.setPosition(cam.eyeX,cam.eyeY,cam.eyeZ-16*(cz-oldz));
+                    cam.setPosition(cam.eyeX,cam.eyeY,cam.eyeZ+16*(cz-oldz));
                     oldz = cz;
                 }
-                translate(cx*16,-cy*16,-cz*16);
+                translate(cx*16,-cy*16,cz*16);
                 if (ro == 2) {
                     rotateY(180);
                 } else if (ro == 1) {
@@ -214,13 +214,13 @@
                 rotateZ(180);
                 texture(img1);
                 model(g1);
-                cam.lookAt(cx*16,-cy*16,-cz*16);
+                cam.lookAt(cx*16,-cy*16,cz*16);
                 pop();
             }
             Object.keys(compsel).forEach(key => {
                 if (key != document.getElementById('comid').value) {
                     push();
-                    translate(compsel[key][0]*16,-compsel[key][1]*16,-compsel[key][2]*16);
+                    translate(compsel[key][0]*16,-compsel[key][1]*16,compsel[key][2]*16);
                     if (compsel[key][3] == 2) {
                         rotateY(180);
                     } else if (compsel[key][3] == 1) {
@@ -232,7 +232,7 @@
                     texture(img2);
                     model(g2);
                     pop();
-                    addvec(compsel[key][0]*16,-compsel[key][1]*16,-compsel[key][2]*16,key,true);
+                    addvec(compsel[key][0]*16,-compsel[key][1]*16,compsel[key][2]*16,key,true);
                 }
             });
             if (vecs[0]) {
