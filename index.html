@@ -170,39 +170,41 @@
             noStroke();
             normalMaterial();
             angleMode(DEGREES);
-            push();
-            if (compsel[document.getElementById('comid').value] != undefined) {
-                cx = compsel[document.getElementById('comid').value][0];
-                cy = compsel[document.getElementById('comid').value][1];
-                cz = compsel[document.getElementById('comid').value][2];
-                ro = compsel[document.getElementById('comid').value][3];
-                addvec(-cx*16,-cy*16,-cz*16,document.getElementById('comid').value);
+            if (document.getElementById('comid').value != undefined) {
+                push();
+                if (compsel[document.getElementById('comid').value] != undefined) {
+                    cx = compsel[document.getElementById('comid').value][0];
+                    cy = compsel[document.getElementById('comid').value][1];
+                    cz = compsel[document.getElementById('comid').value][2];
+                    ro = compsel[document.getElementById('comid').value][3];
+                    addvec(-cx*16,-cy*16,-cz*16,document.getElementById('comid').value,true);
+                }
+                if (cy != oldy) {
+                    cam.setPosition(cam.eyeX,cam.eyeY-16*(cy-oldy),cam.eyeZ);
+                    oldy = cy;
+                }
+                if (cx != oldx) {
+                    cam.setPosition(cam.eyeX-16*(cx-oldx),cam.eyeY,cam.eyeZ);
+                    oldx = cx;
+                }
+                if (cz != oldz) {
+                    cam.setPosition(cam.eyeX,cam.eyeY,cam.eyeZ-16*(cz-oldz));
+                    oldz = cz;
+                }
+                translate(-cx*16,-cy*16,-cz*16);
+                if (ro == 2) {
+                    rotateY(180);
+                } else if (ro == 1) {
+                    rotateY(90);
+                } else if (ro == 3) {
+                    rotateY(270);
+                }
+                rotateZ(180);
+                texture(img1);
+                model(g1);
+                cam.lookAt(-cx*16,-cy*16,-cz*16);
+                pop();
             }
-            if (cy != oldy) {
-                cam.setPosition(cam.eyeX,cam.eyeY-16*(cy-oldy),cam.eyeZ);
-                oldy = cy;
-            }
-            if (cx != oldx) {
-                cam.setPosition(cam.eyeX-16*(cx-oldx),cam.eyeY,cam.eyeZ);
-                oldx = cx;
-            }
-            if (cz != oldz) {
-                cam.setPosition(cam.eyeX,cam.eyeY,cam.eyeZ-16*(cz-oldz));
-                oldz = cz;
-            }
-            translate(-cx*16,-cy*16,-cz*16);
-            if (ro == 2) {
-                rotateY(180);
-            } else if (ro == 1) {
-                rotateY(90);
-            } else if (ro == 3) {
-                rotateY(270);
-            }
-            rotateZ(180);
-            texture(img1);
-            model(g1);
-            cam.lookAt(-cx*16,-cy*16,-cz*16);
-            pop();
             Object.keys(compsel).forEach(key => {
                 if (key != document.getElementById('comid').value) {
                     push();
@@ -218,7 +220,7 @@
                     texture(img2);
                     model(g2);
                     pop();
-                    addvec(-compsel[key][0]*16,-compsel[key][1]*16,-compsel[key][2]*16,key);
+                    addvec(-compsel[key][0]*16,-compsel[key][1]*16,-compsel[key][2]*16,key,true);
                 }
             });
             if (vecs[0]) {
@@ -264,6 +266,34 @@
         var inselect = [];
         var channel = prompt("What server are you connecting to:", "2.tcp.ngrok.io:10546")
         let idd = undefined;
+        function cwe(ms) {
+            var m = ms.split("|");
+            if(complist != undefined) {
+                if(!complist.includes(m[0].substring(4))) {
+                    complist.push(m[0].substring(4));
+                    var opt = document.createElement('option');
+                    opt.innerHTML = m[0].substring(4);
+                    document.getElementById('comid').appendChild(opt);
+                    idd = `con|${document.getElementById('comid').value.toString()}|`;
+                }
+            } else {
+                complist = [];
+                complist.push(m[0].substring(4));
+            }
+            compsel[m[0].substring(4)] = {};
+            compsel[m[0].substring(4)][0] = m[1].split(",")[0];
+            compsel[m[0].substring(4)][1] = m[1].split(",")[1];
+            compsel[m[0].substring(4)][2] = m[1].split(",")[2];
+            if (compsel[m[0].substring(4)][3] = m[1].split(",")[3] == "n") {
+                compsel[m[0].substring(4)][3] = m[1].split(",")[3] = 0;
+            } else if (compsel[m[0].substring(4)][3] = m[1].split(",")[3] == "s") {
+                compsel[m[0].substring(4)][3] = m[1].split(",")[3] = 2;
+            } else if (compsel[m[0].substring(4)][3] = m[1].split(",")[3] == "e") {
+                compsel[m[0].substring(4)][3] = m[1].split(",")[3] = 3;
+            } else if (compsel[m[0].substring(4)][3] = m[1].split(",")[3] == "w") {
+                compsel[m[0].substring(4)][3] = m[1].split(",")[3] = 1;
+            }
+        }
         if(!channel) {
             window.location.reload(true)
         }
@@ -281,19 +311,7 @@
             if(msg.data.substring(0,3) == "web") {
                 document.getElementById("display").value = msg.data.substring(3);
             } else if(msg.data.substring(0,4) == "cweb") {
-                var m = msg.data.split("|");
-                if(complist) {
-                    if(!complist.includes(m[0].substring(4))) {
-                        complist.push(m[0].substring(4));
-                        var opt = document.createElement('option');
-                        opt.innerHTML = m[0].substring(4);
-                        document.getElementById('comid').appendChild(opt);
-                        idd = `con|${document.getElementById('comid').value.toString()}|`;
-                    }
-                } else {
-                    complist = [];
-                    complist.push(m[0].substring(4));
-                }
+                cwe(msg.data);
             } else if (msg.data.substring(0,4) == "rweb") {
                 if (complist.includes(msg.data.substring(4)) & complist.indexOf(msg.data.substring(4)) > -1) {
                     var selectobject = document.getElementById("comid");
@@ -306,21 +324,7 @@
                     complist.splice(complist.indexOf(msg.data.substring(4)),1);
                 }
             } else if (msg.data.substring(0,4) == "wcor") {
-                carr = msg.data.split("|");
-                compsel[carr[5]] = {};
-                compsel[carr[5]][0] = carr[1];
-                compsel[carr[5]][1] = carr[2];
-                compsel[carr[5]][2] = carr[3];
-                if (carr[4] == "n") {
-                    ro = 0;
-                } else if (carr[4] == "s") {
-                    ro = 2;
-                } else if (carr[4] == "e") {
-                    ro = 3;
-                } else if (carr[4] == "w") {
-                    ro = 1;
-                }
-                compsel[carr[5]][3] = ro;
+                cwe(msg.data);
             }
             for (let e = 0; e < complist.length; ++e) {
                 if (!inselect.includes(complist[e])) {
