@@ -140,7 +140,8 @@
         }
         function mouseClicked() {
             if (orange != false) {
-                document.getElementById('comid').selectedIndex = inselect.indexOf(orange);
+                document.getElementById('comid').selectedIndex = complist.indexOf(orange);
+                idd = `con|${document.getElementById('comid').value.toString()}|`;
             }
         }
         function draw() {
@@ -333,7 +334,14 @@
                             idd = `con|${document.getElementById('comid').value.toString()}|`;
                         }
                     }
+                    for (x = 0; x < Object.values(vkeys).length; ++x) {
+                        if (Object.values(vkeys)[x] == msg.data.substring(4)) {
+                            vecs.splice(vecs.indexOf(Object.keys(vkeys)[x]),1);
+                            delete vkeys[Object.keys(vkeys)[x]];
+                        } 
+                    }
                     complist.splice(complist.indexOf(msg.data.substring(4)),1);
+                    delete compsel[msg.data.substring(4)];
                 }
             } else if (msg.data.substring(0,4) == "wcor") {
                 cwe(msg.data);
