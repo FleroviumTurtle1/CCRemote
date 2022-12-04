@@ -57,6 +57,7 @@
         let x = 0;
         let y = 0;
         let bl;
+        let w;
         let vecs = [];
         let vkeys = {};
         function preload() {
@@ -237,7 +238,8 @@
             window.location.reload(true)
         }
         console.log(channel)
-        if (!w) {
+        w = nil;
+        if (w) {
             setInterval(() => {
                 var w = new WebSocket("ws://"+channel)
             }, 100);
