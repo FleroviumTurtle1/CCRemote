@@ -282,7 +282,6 @@
                 document.getElementById("display").value = msg.data.substring(3);
             } else if(msg.data.substring(0,4) == "cweb") {
                 var m = msg.data.split("|");
-                compsel[m[0].substring(4)] = m[1].split(",");
                 if(complist) {
                     if(!complist.includes(m[0].substring(4))) {
                         complist.push(m[0].substring(4));
@@ -292,7 +291,8 @@
                         idd = `con|${document.getElementById('comid').value.toString()}|`;
                     }
                 } else {
-                    complist = m[0].substring(4)
+                    complist = [];
+                    complist.push(m[0].substring(4));
                 }
             } else if (msg.data.substring(0,4) == "rweb") {
                 if (complist.includes(msg.data.substring(4)) & complist.indexOf(msg.data.substring(4)) > -1) {
