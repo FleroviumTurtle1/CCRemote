@@ -164,18 +164,25 @@
                 oldy = cy;
             }
             if (cx != oldx) {
-                cam.setPosition(cam.eyeX+16*(cx-oldx),cam.eyeY,cam.eyeZ);
+                cam.setPosition(cam.eyeX-16*(cx-oldx),cam.eyeY,cam.eyeZ);
                 oldx = cx;
             }
             if (cz != oldz) {
-                cam.setPosition(cam.eyeX,cam.eyeY,cam.eyeZ+16*(cz-oldz));
+                cam.setPosition(cam.eyeX,cam.eyeY,cam.eyeZ-16*(cz-oldz));
                 oldz = cz;
             }
-            rotateZ(180+90*ro);
-            translate(-cx*16,cy*16,cz*16);
+            translate(-cx*16,-cy*16,-cz*16);
+            if (ro == 2) {
+                rotateY(180);
+            } else if (ro == 1) {
+                rotateY(90);
+            } else if (ro == 3) {
+                rotateY(270);
+            }
+            rotateZ(180);
             texture(img1);
             model(g1);
-            cam.lookAt(cx*16,-cy*16,cz*16);
+            cam.lookAt(-cx*16,-cy*16,-cz*16);
             pop();
             push();
             rotateZ(180);
