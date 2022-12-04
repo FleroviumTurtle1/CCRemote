@@ -176,7 +176,7 @@
                 cy = compsel[document.getElementById('comid').value][1];
                 cz = compsel[document.getElementById('comid').value][2];
                 ro = compsel[document.getElementById('comid').value][3];
-                addvec(cx,cy,cz,document.getElementById('comid').value);
+                addvec(-cx*16,-cy*16,-cz*16,document.getElementById('comid').value);
             }
             if (cy != oldy) {
                 cam.setPosition(cam.eyeX,cam.eyeY-16*(cy-oldy),cam.eyeZ);
