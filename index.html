@@ -94,8 +94,9 @@
             if (bi) {
                 vecs.push(n);
             }
-            vkeys[nam] = n;
+            vkeys[n] = nam;
             bi = true;
+            return(n);
         }
         function emptybox(nam,s,col,c,v,b) {
             si = s/2.05;
@@ -135,6 +136,11 @@
                 cnv._curCamera._orbit(0, 0, sensitivityZoom * scaleFactor);
             } else if(eyeZ > 151) {
                 cnv._curCamera._orbit(0, 0, -sensitivityZoom * scaleFactor);
+            }
+        }
+        function mouseClicked() {
+            if (orange != false) {
+                document.getElementById('comid').selectedIndex = inselect.indexOf(orange);
             }
         }
         function draw() {
@@ -238,6 +244,8 @@
                             r = dist(vecs[o][0],vecs[o][1],vecs[o][2],cam.eyeX,cam.eyeY,cam.eyeZ);
                             ve = createVector(vecs[o][0],vecs[o][1],vecs[o][2]);
                         }
+                    } else {
+                        orange = false;
                     }
                 }
             }
@@ -248,7 +256,11 @@
                 bl = createP(vkeys[`${ve.x},${ve.y},${ve.z}`]);
                 bl.position(x,y);
                 if (mouseIsPressed) {
-                    console.log("x:"+ve.x+" y:"+ve.y+" z:"+ve.z);
+                    if (inselect != undefined & inselect.includes(vkeys[`${ve.x},${ve.y},${ve.z}`])) {
+                        orange = vkeys[`${ve.x},${ve.y},${ve.z}`];
+                    }
+                } else {
+                    orange = false;
                 }
                 ve = undefined;
                 r = undefined;
@@ -269,29 +281,29 @@
         function cwe(ms) {
             var m = ms.split("|");
             if(complist != undefined) {
-                if(!complist.includes(m[0].substring(4))) {
-                    complist.push(m[0].substring(4));
+                if(!complist.includes(m[1])) {
+                    complist.push(m[1]);
                     var opt = document.createElement('option');
-                    opt.innerHTML = m[0].substring(4);
+                    opt.innerHTML = m[1];
                     document.getElementById('comid').appendChild(opt);
                     idd = `con|${document.getElementById('comid').value.toString()}|`;
                 }
             } else {
                 complist = [];
-                complist.push(m[0].substring(4));
+                complist.push(m[1]);
             }
-            compsel[m[0].substring(4)] = {};
-            compsel[m[0].substring(4)][0] = m[1].split(",")[0];
-            compsel[m[0].substring(4)][1] = m[1].split(",")[1];
-            compsel[m[0].substring(4)][2] = m[1].split(",")[2];
-            if (compsel[m[0].substring(4)][3] = m[1].split(",")[3] == "n") {
-                compsel[m[0].substring(4)][3] = m[1].split(",")[3] = 0;
-            } else if (compsel[m[0].substring(4)][3] = m[1].split(",")[3] == "s") {
-                compsel[m[0].substring(4)][3] = m[1].split(",")[3] = 2;
-            } else if (compsel[m[0].substring(4)][3] = m[1].split(",")[3] == "e") {
-                compsel[m[0].substring(4)][3] = m[1].split(",")[3] = 3;
-            } else if (compsel[m[0].substring(4)][3] = m[1].split(",")[3] == "w") {
-                compsel[m[0].substring(4)][3] = m[1].split(",")[3] = 1;
+            compsel[m[1]] = {};
+            compsel[m[1]][0] = m[2].split(",")[0];
+            compsel[m[1]][1] = m[2].split(",")[1];
+            compsel[m[1]][2] = m[2].split(",")[2];
+            if (m[2].split(",")[3] == "n") {
+                compsel[m[1]][3] = m[2].split(",")[3] = 0;
+            } else if (m[2].split(",")[3] == "s") {
+                compsel[m[1]][3] = m[2].split(",")[3] = 2;
+            } else if (m[2].split(",")[3] == "e") {
+                compsel[m[1]][3] = m[2].split(",")[3] = 3;
+            } else if (m[2].split(",")[3] == "w") {
+                compsel[m[1]][3] = m[2].split(",")[3] = 1;
             }
         }
         if(!channel) {
