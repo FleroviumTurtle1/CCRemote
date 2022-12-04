@@ -59,6 +59,7 @@
         let bl;
         let vecs = [];
         let vkeys = {};
+        let compsel = {};
         function preload() {
             //size of model = 16
             g1 = loadModel('https://raw.githubusercontent.com/JaggedZirconium/CCRemote/main/assests/CCTurtle.obj');
@@ -159,6 +160,10 @@
             normalMaterial();
             angleMode(DEGREES);
             push();
+            cx = compsel[document.getElementById('comid').value][0];
+            cy = compsel[document.getElementById('comid').value][1];
+            cz = compsel[document.getElementById('comid').value][2];
+            ro = compsel[document.getElementById('comid').value][3];
             if (cy != oldy) {
                 cam.setPosition(cam.eyeX,cam.eyeY-16*(cy-oldy),cam.eyeZ);
                 oldy = cy;
@@ -184,12 +189,23 @@
             model(g1);
             cam.lookAt(-cx*16,-cy*16,-cz*16);
             pop();
-            push();
-            rotateZ(180);
-            translate(32,0,0);
-            texture(img2);
-            model(g2);
-            pop();
+            Object.keys(compsel).forEach(key => {
+                if (key != document.getElementById('comid').value) {
+                    push();
+                    if (compsel[key][3] == 2) {
+                        rotateY(180);
+                    } else if (compsel[key][3] == 1) {
+                        rotateY(90);
+                    } else if (compsel[key][3] == 3) {
+                        rotateY(270);
+                    }
+                    rotateZ(180);
+                    translate(-compsel[key][0]*16,-compsel[key][1]*16,-compsel[key][2]*16);
+                    texture(img2);
+                    model(g2);
+                    pop();
+                }
+            });
             if (vecs[0]) {
                 let j = true;
                 r = 0;
@@ -250,16 +266,18 @@
             if(msg.data.substring(0,3) == "web") {
                 document.getElementById("display").value = msg.data.substring(3);
             } else if(msg.data.substring(0,4) == "cweb") {
+                var m = msg.data.split("|");
+                compsel[m[0].substring(4)] = m[1].split(",");
                 if(complist) {
-                    if(!complist.includes(msg.data.substring(4))) {
-                        complist.push(msg.data.substring(4));
+                    if(!complist.includes(m[0].substring(4))) {
+                        complist.push(m[0].substring(4));
                         var opt = document.createElement('option');
-                        opt.innerHTML = msg.data.substring(4);
+                        opt.innerHTML = m[0].substring(4);
                         document.getElementById('comid').appendChild(opt);
                         idd = `con|${document.getElementById('comid').value.toString()}|`;
                     }
                 } else {
-                    complist = msg.data.substring(4)
+                    complist = m[0].substring(4)
                 }
             } else if (msg.data.substring(0,4) == "rweb") {
                 if (complist.includes(msg.data.substring(4)) & complist.indexOf(msg.data.substring(4)) > -1) {
@@ -274,9 +292,10 @@
                 }
             } else if (msg.data.substring(0,4) == "wcor") {
                 carr = msg.data.split("|");
-                cx = carr[1];
-                cy = carr[2];
-                cz = carr[3];
+                compsel[carr[5]] = {};
+                compsel[carr[5]][0] = carr[1];
+                compsel[carr[5]][1] = carr[2];
+                compsel[carr[5]][2] = carr[3];
                 if (carr[4] == "n") {
                     ro = 0;
                 } else if (carr[4] == "s") {
@@ -286,6 +305,7 @@
                 } else if (carr[4] == "w") {
                     ro = 1;
                 }
+                compsel[carr[5]][3] = ro;
             }
             for (let e = 0; e < complist.length; ++e) {
                 if (!inselect.includes(complist[e])) {
