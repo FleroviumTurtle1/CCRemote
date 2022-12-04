@@ -237,7 +237,11 @@
             window.location.reload(true)
         }
         console.log(channel)
-        var w = new WebSocket("ws://"+channel)
+        if (!w) {
+            setInterval(() => {
+                var w = new WebSocket("ws://"+channel)
+            }, 100);
+        }
         w.addEventListener("open", () => {
             console.log("ok");
             w.send("WebClientConnected")
