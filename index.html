@@ -160,10 +160,12 @@
             normalMaterial();
             angleMode(DEGREES);
             push();
-            cx = compsel[document.getElementById('comid').value][0];
-            cy = compsel[document.getElementById('comid').value][1];
-            cz = compsel[document.getElementById('comid').value][2];
-            ro = compsel[document.getElementById('comid').value][3];
+            if (Object.keys(compsel).length()>0) {
+                cx = compsel[document.getElementById('comid').value][0];
+                cy = compsel[document.getElementById('comid').value][1];
+                cz = compsel[document.getElementById('comid').value][2];
+                ro = compsel[document.getElementById('comid').value][3];
+            }
             if (cy != oldy) {
                 cam.setPosition(cam.eyeX,cam.eyeY-16*(cy-oldy),cam.eyeZ);
                 oldy = cy;
