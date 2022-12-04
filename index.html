@@ -206,6 +206,7 @@
             Object.keys(compsel).forEach(key => {
                 if (key != document.getElementById('comid').value) {
                     push();
+                    translate(-compsel[key][0]*16,-compsel[key][1]*16,-compsel[key][2]*16);
                     if (compsel[key][3] == 2) {
                         rotateY(180);
                     } else if (compsel[key][3] == 1) {
@@ -214,7 +215,6 @@
                         rotateY(270);
                     }
                     rotateZ(180);
-                    translate(-compsel[key][0]*16,-compsel[key][1]*16,-compsel[key][2]*16);
                     texture(img2);
                     model(g2);
                     pop();
