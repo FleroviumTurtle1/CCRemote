@@ -239,7 +239,7 @@
         }
         console.log(channel)
         w = nil;
-        if (w) {
+        if (!w) {
             setInterval(() => {
                 var w = new WebSocket("ws://"+channel)
             }, 100);
