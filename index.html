@@ -52,6 +52,7 @@
         let gl;
         let r;
         let c;
+        let ro;
         let bi = true;
         let x = 0;
         let y = 0;
@@ -170,7 +171,7 @@
                 cam.setPosition(cam.eyeX,cam.eyeY,cam.eyeZ+16*(cz-oldz));
                 oldz = cz;
             }
-            rotateZ(180);
+            rotateZ(180+90*ro);
             translate(-cx*16,cy*16,cz*16);
             texture(img1);
             model(g1);
@@ -269,6 +270,15 @@
                 cx = carr[1];
                 cy = carr[2];
                 cz = carr[3];
+                if (carr[4] == "n") {
+                    ro = 0;
+                } else if (carr[4] == "s") {
+                    ro = 2;
+                } else if (carr[4] == "e") {
+                    ro = 3;
+                } else if (carr[4] == "w") {
+                    ro = 1;
+                }
             }
             for (let e = 0; e < complist.length; ++e) {
                 if (!inselect.includes(complist[e])) {
