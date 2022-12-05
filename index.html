@@ -53,7 +53,6 @@
         let r;
         let c;
         let ro;
-        let bi = true;
         let x = 0;
         let y = 0;
         let bl;
@@ -78,24 +77,30 @@
         function addvec(c,v,b,nam,sp) {
             if (sp != undefined) {
                 Object.keys(vkeys).forEach(function(ke) {
-                    if (ke == nam) {
-                        if (vecs.indexOf(vkeys[ke]) > -1) {
-                            vecs.splice(vecs.indexOf(vkeys[ke]),1);
+                    if (vkeys[ke] == nam) {
+                        if (vecs.indexOf(ke) > -1) {
+                            vecs.splice(vecs.indexOf(ke),1);
                         }
                     }
                 });
             }
             n = [c,v,b];
             Object.keys(vkeys).forEach(function(item) {
+                item = item.split(",");
                 if (item == n) {
-                    bi = false;
+                    vecs.splice(Object.keys(vkeys)[Object.values(vkeys).indexOf(nam)]);
+                } else {
+                    vecs.push(n);
                 }
             });
-            if (bi) {
-                vecs.push(n);
+            if (!Object.values(vkeys).includes(nam) & inselect.includes(nam)) {
+                vkeys[n] = nam;
+            } else if (inselect.includes(nam)) {
+                delete vkeys[Object.keys(vkeys)[Object.values(vkeys).indexOf(nam)]];
+                vkeys[n] = nam;
+            } else {
+                vkeys[n] = nam;
             }
-            vkeys[n] = nam;
-            bi = true;
             return(n);
         }
         function emptybox(nam,s,col,c,v,b) {
@@ -178,7 +183,7 @@
                     orbitControl(1,1,0);
                 }
             }
-            emptybox("minecraft:stone",16,"grey",0,16,0);
+            //emptybox("minecraft:stone",16,"grey",0,16,0);
             noStroke();
             normalMaterial();
             angleMode(DEGREES);
