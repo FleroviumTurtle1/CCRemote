@@ -75,24 +75,12 @@
             addScreenPositionFunction();
         }
         function addvec(c,v,b,nam,sp) {
-            if (sp != undefined) {
-                Object.keys(vkeys).forEach(function(ke) {
-                    if (vkeys[ke] == nam) {
-                        if (vecs.indexOf(ke) > -1) {
-                            vecs.splice(vecs.indexOf(ke),1);
-                        }
-                    }
-                });
-            }
             n = [c,v,b];
-            Object.keys(vkeys).forEach(function(item) {
-                item = item.split(",");
-                if (item == n) {
-                    vecs.splice(Object.keys(vkeys)[Object.values(vkeys).indexOf(nam)]);
-                } else {
-                    vecs.push(n);
-                }
-            });
+            if (Object.values(vkeys).indexOf(nam) > -1) {
+                vecs.splice(Object.keys(vkeys)[Object.values(vkeys).indexOf(nam)]);
+            } else {
+                vecs.push(n);
+            }
             if (!Object.values(vkeys).includes(nam) & inselect.includes(nam)) {
                 vkeys[n] = nam;
             } else if (inselect.includes(nam)) {
