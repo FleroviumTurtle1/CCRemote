@@ -56,7 +56,6 @@
         let x = 0;
         let y = 0;
         let bl;
-        let vecs = [];
         let vkeys = {};
         let compsel = {};
         function preload() {
@@ -76,11 +75,6 @@
         }
         function addvec(c,v,b,nam,sp) {
             n = [c,v,b];
-            if (Object.values(vkeys).indexOf(nam) > -1) {
-                vecs.splice(Object.keys(vkeys)[Object.values(vkeys).indexOf(nam)]);
-            } else {
-                vecs.push(n);
-            }
             if (!Object.values(vkeys).includes(nam) & inselect.includes(nam)) {
                 vkeys[n] = nam;
             } else if (inselect.includes(nam)) {
@@ -138,11 +132,6 @@
             }
         }
         function draw() {
-            for (let x = 0; x < Object.keys(vkeys).length; ++x) {
-                if (!vecs.includes(Object.keys(vkeys)[x])) {
-                    vecs.push(Object.keys(vkeys)[x])
-                }
-            }
             setAttributes('alpha', false);
             eyeZ =  Math.pow((Math.pow(cam.eyeX - cx, 2) + Math.pow(cam.eyeY - cy, 2) + Math.pow(cam.eyeZ - cz, 2) * 1.0), 0.5).toFixed(10);
             background(255);
@@ -228,20 +217,21 @@
                     addvec(compsel[key][0]*16,-compsel[key][1]*16,compsel[key][2]*16,key,true);
                 }
             });
-            if (vecs[0]) {
+            if (Object.keys(vkeys).length > 0) {
                 let j = true;
                 r = 0;
-                ve = createVector(vecs[0][0],vecs[0][1],vecs[0][2]);
+                ve = createVector(0,0,0);
                 c = 0;
-                for (let o = 0; o < vecs.length; o++) {
-                    u = screenPosition(vecs[o]);
+                for (let o = 0; o < Object.keys(vkeys).length; o++) {
+                    let t = Object.keys(vkeys)[o].split(",");
+                    u = screenPosition(createVector(Number(t[0]),Number(t[1]),Number(t[2])));
                     d = dist(x-width/2,y-height/2, u.x, u.y);
-                    if (d < 16/map(eyeZ,100,700,1,2)) {
+                    if (d < 16/(d/10)) {
                         c = 1;
-                        if (j | r > dist(vecs[o][0],vecs[o][1],vecs[o][2],cam.eyeX,cam.eyeY,cam.eyeZ)) {
+                        if (j | r > dist(Number(t[0]),Number(t[1]),Number(t[2]),cam.eyeX,cam.eyeY,cam.eyeZ)) {
                             j = false;
-                            r = dist(vecs[o][0],vecs[o][1],vecs[o][2],cam.eyeX,cam.eyeY,cam.eyeZ);
-                            ve = createVector(vecs[o][0],vecs[o][1],vecs[o][2]);
+                            r = dist(Number(t[0]),Number(t[1]),Number(t[2]),cam.eyeX,cam.eyeY,cam.eyeZ);
+                            ve = createVector(Number(t[0]),Number(t[1]),Number(t[2]));
                         }
                     } else {
                         orange = false;
@@ -253,6 +243,7 @@
             }
             if (r != undefined & ve != undefined & c == 1) {
                 bl = createP(vkeys[`${ve.x},${ve.y},${ve.z}`]);
+                bl.style('color','chocolate')
                 bl.position(x,y);
                 if (mouseIsPressed) {
                     if (inselect != undefined & inselect.includes(vkeys[`${ve.x},${ve.y},${ve.z}`])) {
@@ -334,7 +325,6 @@
                     }
                     for (x = 0; x < Object.values(vkeys).length; ++x) {
                         if (Object.values(vkeys)[x] == msg.data.substring(4)) {
-                            vecs.splice(vecs.indexOf(Object.keys(vkeys)[x]),1);
                             delete vkeys[Object.keys(vkeys)[x]];
                         } 
                     }
