@@ -58,6 +58,7 @@
         let bl;
         let vkeys = {};
         let compsel = {};
+        let d3 = 0;
         function preload() {
             //size of model = 16
             g1 = loadModel('https://raw.githubusercontent.com/JaggedZirconium/CCRemote/main/assests/CCTurtle.obj');
@@ -126,14 +127,14 @@
             }
         }
         function mouseClicked() {
-            if (orange != false) {
+            if (orange) {
                 document.getElementById('comid').selectedIndex = complist.indexOf(orange);
                 idd = `con|${document.getElementById('comid').value.toString()}|`;
             }
         }
         function draw() {
             setAttributes('alpha', false);
-            eyeZ =  Math.pow((Math.pow(cam.eyeX - cx, 2) + Math.pow(cam.eyeY - cy, 2) + Math.pow(cam.eyeZ - cz, 2) * 1.0), 0.5).toFixed(10);
+            eyeZ = dist(cam.eyeX,cam.eyeY,cam.eyeZ,cx*16,-cy*16,cz*16);
             background(255);
             if (p) {
                 p.remove();
@@ -226,9 +227,10 @@
                     let t = Object.keys(vkeys)[o].split(",");
                     u = screenPosition(createVector(Number(t[0]),Number(t[1]),Number(t[2])));
                     d = dist(x-width/2,y-height/2, u.x, u.y);
-                    if (d < 16/(d/10)) {
+                    d3 = dist(cam.eyeX,cam.eyeY,cam.eyeZ,Number(t[0]),Number(t[1]),Number(t[2]));
+                    if (d < 64/(d3/100)) {
                         c = 1;
-                        if (j | r > dist(Number(t[0]),Number(t[1]),Number(t[2]),cam.eyeX,cam.eyeY,cam.eyeZ)) {
+                        if (j | r > d3) {
                             j = false;
                             r = dist(Number(t[0]),Number(t[1]),Number(t[2]),cam.eyeX,cam.eyeY,cam.eyeZ);
                             ve = createVector(Number(t[0]),Number(t[1]),Number(t[2]));
