@@ -88,6 +88,9 @@
         }
         function emptybox(nam,s,col,c,v,b) {
             si = s/2.05;
+            c = c*16;
+            v = v*-16;
+            b = b*16;
             push();
             if (c != undefined & v != undefined & b != undefined) {
                 translate(c,v,b)
@@ -128,8 +131,10 @@
         }
         function mouseClicked() {
             if (orange) {
-                document.getElementById('comid').selectedIndex = complist.indexOf(orange);
-                idd = `con|${document.getElementById('comid').value.toString()}|`;
+                if (complist.includes(ornage)) {
+                    document.getElementById('comid').selectedIndex = complist.indexOf(orange);
+                    idd = `con|${document.getElementById('comid').value.toString()}|`;
+                }
             }
         }
         function draw() {
@@ -161,7 +166,7 @@
                     orbitControl(1,1,0);
                 }
             }
-            //emptybox("minecraft:stone",16,"grey",0,16,0);
+            //emptybox("minecraft:stone",16,"grey",0,-1,0);
             noStroke();
             normalMaterial();
             angleMode(DEGREES);
@@ -201,7 +206,7 @@
                 pop();
             }
             Object.keys(compsel).forEach(key => {
-                if (key != document.getElementById('comid').value) {
+                if (key != document.getElementById('comid').value & complist.includes(key)) {
                     push();
                     translate(compsel[key][0]*16,-compsel[key][1]*16,compsel[key][2]*16);
                     if (compsel[key][3] == 2) {
@@ -216,6 +221,8 @@
                     model(g2);
                     pop();
                     addvec(compsel[key][0]*16,-compsel[key][1]*16,compsel[key][2]*16,key,true);
+                } else if (key != document.getElementById('comid').value) {
+                    emptybox(key,16,undefined,compsel[key][0],compsel[key][1],compsel[key][2]);
                 }
             });
             if (Object.keys(vkeys).length > 0) {
@@ -270,20 +277,8 @@
         var inselect = [];
         var channel = prompt("What server are you connecting to:", "2.tcp.ngrok.io:10546")
         let idd = undefined;
-        function cwe(ms) {
-            var m = ms.split("|");
-            if(complist != undefined) {
-                if(!complist.includes(m[1])) {
-                    complist.push(m[1]);
-                    var opt = document.createElement('option');
-                    opt.innerHTML = m[1];
-                    document.getElementById('comid').appendChild(opt);
-                    idd = `con|${document.getElementById('comid').value.toString()}|`;
-                }
-            } else {
-                complist = [];
-                complist.push(m[1]);
-            }
+        var m = undefined;
+        function cwe(m) {
             compsel[m[1]] = {};
             compsel[m[1]][0] = m[2].split(",")[0];
             compsel[m[1]][1] = m[2].split(",")[1];
@@ -311,11 +306,24 @@
             w.send("WebClientConnected")
         });
         w.addEventListener("message", (msg) => {
-            console.log(msg.data)
+            console.log(msg.data);
             if(msg.data.substring(0,3) == "web") {
                 document.getElementById("display").value = msg.data.substring(3);
             } else if(msg.data.substring(0,4) == "cweb") {
-                cwe(msg.data);
+                m = msg.data.split("|")
+                if(complist != undefined) {
+                    if(!complist.includes(m[1])) {
+                        complist.push(m[1]);
+                        var opt = document.createElement('option');
+                        opt.innerHTML = m[1];
+                        document.getElementById('comid').appendChild(opt);
+                        idd = `con|${document.getElementById('comid').value.toString()}|`;
+                    }
+                } else {
+                    complist = [];
+                    complist.push(m[1]);
+                }
+                cwe(m);
             } else if (msg.data.substring(0,4) == "rweb") {
                 if (complist.includes(msg.data.substring(4)) & complist.indexOf(msg.data.substring(4)) > -1) {
                     var selectobject = document.getElementById("comid");
@@ -334,7 +342,23 @@
                     delete compsel[msg.data.substring(4)];
                 }
             } else if (msg.data.substring(0,4) == "wcor") {
-                cwe(msg.data);
+                m = msg.data.split("|");
+                if(complist != undefined) {
+                    if(!complist.includes(m[1])) {
+                        complist.push(m[1]);
+                        var opt = document.createElement('option');
+                        opt.innerHTML = m[1];
+                        document.getElementById('comid').appendChild(opt);
+                        idd = `con|${document.getElementById('comid').value.toString()}|`;
+                    }
+                } else {
+                    complist = [];
+                    complist.push(m[1]);
+                }
+                cwe(m);
+            } else if (msg.data.substring(0,5) == "block") {
+                m = msg.data.split("|");
+                cwe(m);
             }
             for (let e = 0; e < complist.length; ++e) {
                 if (!inselect.includes(complist[e])) {
